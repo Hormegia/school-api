@@ -1,4 +1,4 @@
-package com.apolo;
+package com.apolo.model;
 
 public class Matricula {
 

@@ -1,4 +1,4 @@
-package com.apolo;
+package com.apolo.swagger;
 
 //Configuration
 
@@ -24,10 +24,10 @@ import java.util.*;
 public class SwaggerConfig {
 
     public static final Contact DEFAULT_CONTACT = new Contact(
-            "Ranga Karanam", "http://www.in28minutes.com", "in28minutes@gmail.com");
+            "fernandito", "http://www.in28minutes.com", "in28minutes@gmail.com");
 
     public static final ApiInfo DEFAULT_API_INFO = new ApiInfo(
-            "Awesome API Title", "Awesome API Description", "1.0",
+            "Awesome API Title", "cambiar descripción APi", "1.0",
             "urn:tos", DEFAULT_CONTACT,
             "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", Arrays.asList());
 

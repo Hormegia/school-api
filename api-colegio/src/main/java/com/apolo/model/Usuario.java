@@ -1,4 +1,4 @@
-package com.apolo;
+package com.apolo.model;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;

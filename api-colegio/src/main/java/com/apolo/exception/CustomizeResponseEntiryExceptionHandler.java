@@ -1,6 +1,5 @@
 package com.apolo.exception;
 
-import com.apolo.UsuarioNoEncontradoException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

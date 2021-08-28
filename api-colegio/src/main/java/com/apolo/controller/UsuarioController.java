@@ -1,6 +1,9 @@
-package com.apolo;
+package com.apolo.controller;
 
 
+import com.apolo.model.Usuario;
+import com.apolo.dao.UsuarioDaoService;
+import com.apolo.exception.UsuarioNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.hateoas.EntityModel;

@@ -1,5 +1,6 @@
-package com.apolo;
+package com.apolo.dao;
 
+import com.apolo.model.Usuario;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

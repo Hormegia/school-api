@@ -1,11 +1,11 @@
-package com.apolo;
+package com.apolo.controller;
 
 
+import com.apolo.model.Matricula;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

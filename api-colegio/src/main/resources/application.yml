@@ -1,0 +1,13 @@
+spring:
+  security:
+    user:
+      name: username
+      password: password
+
+server:
+  port: 8080
+
+#deshabilita la pagina de login por defecto
+
+
+#spring.jpa.show-sql=true
