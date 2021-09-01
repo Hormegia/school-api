@@ -1,4 +1,4 @@
-package com.apolo.controller;
+package com.apolo.model.controller;
 
 
 import com.apolo.model.Matricula;

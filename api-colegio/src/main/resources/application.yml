@@ -4,10 +4,35 @@ spring:
       name: username
       password: password
 
+  datasource:
+    url: jdbc:h2:mem:testdb
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    open-in-view: true
+
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+
+  h2:
+    console:
+      enabled: true
+
 server:
   port: 8080
 
-#deshabilita la pagina de login por defecto
 
+
+#se muestra toda la auto-configuración en el log
+logging:
+  level:
+    org:
+     springframework: debug
+     hibernate: debug
 
 #spring.jpa.show-sql=true
