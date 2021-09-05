@@ -1,4 +1,4 @@
-package com.apolo.auth;
+package com.apolo.autenticar.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,13 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.Filter;
-import java.net.PasswordAuthentication;
 
 @Configuration
 @EnableWebSecurity
@@ -38,11 +33,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable();
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/autenticar").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

@@ -1,6 +1,6 @@
-package com.apolo.auth;
+package com.apolo.autenticar.jwt;
 
-import com.apolo.auth.util.JwtUtil;
+import com.apolo.autenticar.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

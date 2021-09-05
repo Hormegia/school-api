@@ -1,4 +1,4 @@
-package com.apolo.auth.model;
+package com.apolo.autenticar.jwt.model;
 
 import java.io.Serializable;
 

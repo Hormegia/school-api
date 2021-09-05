@@ -1,4 +1,4 @@
-package com.apolo.auth;
+package com.apolo.autenticar.jwt;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

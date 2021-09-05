@@ -1,4 +1,4 @@
-package com.apolo.auth.util;
+package com.apolo.autenticar.jwt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
