@@ -7,7 +7,9 @@ spring:
       password: password
 
   datasource:
-    url: jdbc:mysql://localhost:8080/colegio_test
+    username: root
+    password: ''
+    url: jdbc:mysql://127.0.0.1/colegio_test?createDatabaseIfNotExist=true&useSSL=false
 
 server:
   port: 8084
