@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+  security:
+    user:
+      name: username
+      password: password
+
+  datasource:
+    url: jdbc:mysql://localhost:8080/colegio_test
+
+server:
+  port: 8084
