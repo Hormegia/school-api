@@ -1,4 +1,4 @@
-package com.apolo.model.controller;
+package com.apolo.model.resource;
 
 
 //import com.apolo.model.repository.UsuarioDaoService;
@@ -112,6 +112,7 @@ public class UsuarioJPAResource {
                 .path("/{id}")
                 .buildAndExpand(
                         matricula.getId()).toUri();
+        System.out.println(ResponseEntity.created(location).build());
 
         return ResponseEntity.created(location).build();
     }
