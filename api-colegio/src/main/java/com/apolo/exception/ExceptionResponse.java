@@ -13,12 +13,12 @@ public class ExceptionResponse {
         this.timestamp = timestamp;
     }
 
-    public String getMessagep() {
-        return messagep;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessagep(String messagep) {
-        this.messagep = messagep;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getDetails() {
@@ -29,13 +29,13 @@ public class ExceptionResponse {
         this.details = details;
     }
 
-    private String messagep;
+    private String message;
     private String details;
 
-    public ExceptionResponse(Date timestamp, String messagep, String details) {
+    public ExceptionResponse(Date timestamp, String message, String details) {
         super();
         this.timestamp = timestamp;
-        this.messagep = messagep;
+        this.message = message;
         this.details = details;
     }
 }

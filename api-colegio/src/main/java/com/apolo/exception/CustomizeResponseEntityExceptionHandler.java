@@ -16,7 +16,7 @@ import java.util.List;
 
 @ControllerAdvice
 @RestController
-public class CustomizeResponseEntiryExceptionHandler  extends ResponseEntityExceptionHandler {
+public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request){
@@ -24,11 +24,18 @@ public class CustomizeResponseEntiryExceptionHandler  extends ResponseEntityExce
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UsuarioNoEncontradoException.class)
-    public final ResponseEntity<Object> handleUsuarioNoEncontradoException(UsuarioNoEncontradoException ex, WebRequest request){
+    @ExceptionHandler(ObjetoNoEncontradoException.class)
+    public final ResponseEntity<Object> handleObjetoNoEncontrado(ObjetoNoEncontradoException ex, WebRequest request){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ObjetoExistenteException.class)
+    public final ResponseEntity<Object> handleObjetoExistenteException(ObjetoExistenteException ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
     }
 
     @Override
