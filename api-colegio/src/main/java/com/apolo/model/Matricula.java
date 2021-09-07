@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Matricula {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -27,15 +27,10 @@ public class AuthenticationController {
 
 
     @PostMapping("/autenticar")
-    public ResponseEntity<?> crearTokenAutenticado(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest. getPassword())
-            );
-        }catch (BadCredentialsException $e){
-            throw new Exception("INNNNNNN", $e);
-        }
-
+    public ResponseEntity<?> crearTokenAutenticado(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+        );
 
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());

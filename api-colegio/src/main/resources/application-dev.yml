@@ -1,4 +1,6 @@
 spring:
+  messages:
+    encoding: utf-8
 
   jpa:
     show-sql: false
@@ -9,6 +11,24 @@ spring:
         hibernate:
           dialect: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: on
+
+  mail:
+    host: "smtp.mailtrap.io"
+    port: 2525
+    protocol: 'smtp'
+    username: "da88751db1de09"
+    password: "740691817b5a20"
+    properties:
+      mail:
+        transport:
+          protocol: "smtp"
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 8000
+        debug: true
+
 
 
 #smuestra toda la auto-configuración en el log
