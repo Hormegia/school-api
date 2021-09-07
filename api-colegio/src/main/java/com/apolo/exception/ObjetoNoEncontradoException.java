@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class UsuarioNoEncontradoException extends RuntimeException {
+public class ObjetoNoEncontradoException extends RuntimeException {
 
-    public UsuarioNoEncontradoException(String message) {
+    public ObjetoNoEncontradoException(String message) {
         super(message);
     }
 }

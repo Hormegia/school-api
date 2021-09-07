@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+  security:
+    user:
+      name: username
+      password: password
+
+  datasource:
+    username: root
+    password: ''
+    url: jdbc:mysql://127.0.0.1/colegio_test?createDatabaseIfNotExist=true&useSSL=false
+
+server:
+  port: 8084
