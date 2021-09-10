@@ -2,6 +2,8 @@ spring:
   messages:
     encoding: utf-8
 
+  session:
+    store-type=jdbc:
   jpa:
     show-sql: false
     hibernate:
@@ -12,12 +14,12 @@ spring:
           dialect: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: on
 
+  security:
+    user:
+      name: correo
+      password: password
+
   mail:
-    host: "smtp.mailtrap.io"
-    port: 2525
-    protocol: 'smtp'
-    username: "da88751db1de09"
-    password: "740691817b5a20"
     properties:
       mail:
         transport:
