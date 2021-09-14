@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +25,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwRequestFilter;
 
+    @Autowired
+    private SessionFilter sessionFilter;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.authenticationProvider(authProvider());
@@ -33,14 +37,26 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     //TODO cambiar el path en el yml
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().disable();
+        //http.httpBasic().disable();
+
+
+
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/autenticar").permitAll()
                 .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and()
+                .rememberMe().rememberMeCookieName("SESSIONID")
+                .and()
+                .sessionManagement()
+                .sessionFixation().migrateSession()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/")
+                .maximumSessions(1)
+                .expiredUrl("//");
 
-       // http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
+
+        //http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -63,4 +79,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
 }
+
+
+//.logout().logoutUrl("/baeldung/logout")
+//        .addLogoutHandler(new HeaderWriterLogoutHandler(
+//        new ClearSiteDataHeaderWriter(
+//        ClearSiteDataHeaderWriter.Directive.CACHE,
+//        ClearSiteDataHeaderWriter.Directive.COOKIES,
+//        ClearSiteDataHeaderWriter.Directive.STORAGE)));

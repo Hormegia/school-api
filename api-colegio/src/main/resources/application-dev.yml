@@ -2,8 +2,6 @@ spring:
   messages:
     encoding: utf-8
 
-  session:
-    store-type=jdbc:
   jpa:
     show-sql: false
     hibernate:
@@ -31,6 +29,17 @@ spring:
           timeout: 8000
         debug: true
 
+
+server:
+  servlet:
+    session:
+      timeout=: 1m
+      cookie:
+        http-only: true
+        secure: false
+        name: "SESSIONID"
+        max-age: 2d
+      tracking-modes: COOKIE
 
 
 #smuestra toda la auto-configuración en el log
