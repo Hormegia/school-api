@@ -25,11 +25,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwRequestFilter;
 
-    @Autowired
-    private SessionFilter sessionFilter;
-
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
         auth.userDetailsService(myUserDetailsService);
     }
@@ -37,28 +34,16 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     //TODO cambiar el path en el yml
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //http.httpBasic().disable();
-
-
-
+        http.cors();
+        http.httpBasic().disable();
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/autenticar").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .rememberMe().rememberMeCookieName("SESSIONID")
-                .and()
-                .sessionManagement()
-                .sessionFixation().migrateSession()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/")
-                .maximumSessions(1)
-                .expiredUrl("//");
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
-
-        //http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
 
 
     @Override
@@ -79,18 +64,4 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }
-
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
-
 }
-
-
-//.logout().logoutUrl("/baeldung/logout")
-//        .addLogoutHandler(new HeaderWriterLogoutHandler(
-//        new ClearSiteDataHeaderWriter(
-//        ClearSiteDataHeaderWriter.Directive.CACHE,
-//        ClearSiteDataHeaderWriter.Directive.COOKIES,
-//        ClearSiteDataHeaderWriter.Directive.STORAGE)));

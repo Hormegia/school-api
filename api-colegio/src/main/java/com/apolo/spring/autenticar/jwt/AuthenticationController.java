@@ -4,18 +4,16 @@ import com.apolo.spring.util.JwtUtil;
 import com.apolo.spring.model.AuthenticationRequest;
 import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+@CrossOrigin
 @RestController
 public class AuthenticationController {
 
@@ -25,7 +23,8 @@ public class AuthenticationController {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-
+    @Autowired
+    private JwtUtil jwTokenUtil;
 
 
     @PostMapping("/autenticar")
@@ -37,6 +36,9 @@ public class AuthenticationController {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
-        return ResponseEntity.ok().build();
+
+        final String jwt = jwTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }
