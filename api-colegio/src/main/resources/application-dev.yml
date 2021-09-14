@@ -30,16 +30,6 @@ spring:
         debug: true
 
 
-server:
-  servlet:
-    session:
-      timeout=: 1m
-      cookie:
-        http-only: true
-        secure: false
-        name: "SESSIONID"
-        max-age: 2d
-      tracking-modes: COOKIE
 
 
 #smuestra toda la auto-configuración en el log
