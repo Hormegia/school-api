@@ -1,38 +1,23 @@
 spring:
+  profiles:
+    active: dev
   security:
     user:
-      name: username
+      name: correo
       password: password
 
   datasource:
-    url: jdbc:h2:mem:testdb
+    username: root
+    password: ''
+    url: jdbc:mysql://127.0.0.1/colegio_test?createDatabaseIfNotExist=true&useSSL=false
 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
-    open-in-view: true
-
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: default
-
-  h2:
-    console:
-      enabled: true
+  mail:
+    host: "smtp.mailtrap.io"
+    port: 2525
+    protocol: 'smtp'
+    username: "da88751db1de09"
+    password: "740691817b5a20"
 
 server:
-  port: 8080
+  port: 8084
 
-
-
-#se muestra toda la auto-configuración en el log
-logging:
-  level:
-    org:
-     springframework: debug
-     hibernate: debug
-
-#spring.jpa.show-sql=true

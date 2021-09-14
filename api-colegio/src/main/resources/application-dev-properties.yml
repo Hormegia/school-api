@@ -1,12 +1,24 @@
-################### JavaMail Configuration ##########################
-support
-  email=USERNAME@gmail.com
-spring.mail.host=smtp.gmail.com
-spring.mail.port=465
-spring.mail.protocol=smtps
-spring.mail.username=USERNAME@gmail.com
-spring.mail.password=PASSWORD
-spring.mail.properties.mail.transport.protocol=smtps
-spring.mail.properties.mail.smtps.auth=true
-spring.mail.properties.mail.smtps.starttls.enable=true
-spring.mail.properties.mail.smtps.timeout=8000
+################### Configuración para despliegue ##########################
+spring:
+  profiles:
+    active: dev
+  security:
+    user:
+      name: correo
+      password: password
+
+  datasource:
+    username: root
+    password: ''
+    url: jdbc:mysql://127.0.0.1/colegio_test?createDatabaseIfNotExist=true&useSSL=false
+
+  mail:
+    host: "smtp.mailtrap.io"
+    port: 2525
+    protocol: 'smtp'
+    username: "da88751db1de09"
+    password: "740691817b5a20"
+
+server:
+  port: 8084
+

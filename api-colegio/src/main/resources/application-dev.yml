@@ -12,12 +12,12 @@ spring:
           dialect: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: on
 
+  security:
+    user:
+      name: correo
+      password: password
+
   mail:
-    host: "smtp.mailtrap.io"
-    port: 2525
-    protocol: 'smtp'
-    username: "da88751db1de09"
-    password: "740691817b5a20"
     properties:
       mail:
         transport:
@@ -29,6 +29,17 @@ spring:
           timeout: 8000
         debug: true
 
+
+server:
+  servlet:
+    session:
+      timeout=: 1m
+      cookie:
+        http-only: true
+        secure: false
+        name: "SESSIONID"
+        max-age: 2d
+      tracking-modes: COOKIE
 
 
 #smuestra toda la auto-configuración en el log
