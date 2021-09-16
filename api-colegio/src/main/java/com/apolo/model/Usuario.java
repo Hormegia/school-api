@@ -1,8 +1,6 @@
 package com.apolo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 
@@ -28,11 +26,13 @@ public class Usuario {
     @Pattern(regexp="^(.+)@(.+)$",
             message = "no cumple con la estructura de un correo")
 
+    @NotNull
     private String correo;
 
     private Boolean habilitado;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY )
     private String password;
 
     @OneToMany(mappedBy = "usuario")
@@ -87,6 +87,7 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -110,6 +111,7 @@ public class Usuario {
     public void setRolesCreados(List<RolUsuario> rolesCreados) {
         this.rolesCreados = rolesCreados;
     }
+
     public String getCorreo() {
         return correo;
     }

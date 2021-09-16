@@ -4,7 +4,7 @@ import com.apolo.model.TokenActivacionUsuario;
 import com.apolo.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TokenActivacionUsuarioRepository extends JpaRepository<TokenActivacionUsuario, Long> {
+public interface TokenActivacionUsuarioRepository extends JpaRepository<TokenActivacionUsuario, Integer> {
 
     TokenActivacionUsuario findByToken(String token);
 

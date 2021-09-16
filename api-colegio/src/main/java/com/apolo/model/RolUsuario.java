@@ -12,13 +12,14 @@ public class RolUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("roles")
     private Usuario usuario;
 
-    private Long idRol;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rol rol;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("roles")
@@ -32,11 +33,11 @@ public class RolUsuario {
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,13 +57,12 @@ public class RolUsuario {
         this.usuarioCreacion = usuarioCreacion;
     }
 
-
-    public Long getIdRol() {
-        return idRol;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setIdRol(Long idRol) {
-        this.idRol = idRol;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Date getFechaCreacion() {

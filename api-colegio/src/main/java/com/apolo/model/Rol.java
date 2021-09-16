@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -17,9 +18,10 @@ public class Rol {
     private Integer id;
 
     @Size(min=2, message = "minimo 2")
+    @NotNull
     private String nombre;
 
-
+    @NotNull
     private String credencial;
 
     public Rol(){
@@ -30,5 +32,39 @@ public class Rol {
         this.id = id;
         this.nombre = nombre;
         this.credencial = credencial;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCredencial() {
+        return credencial;
+    }
+
+    public void setCredencial(String credencial) {
+        this.credencial = credencial;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Rol{");
+        sb.append("id=").append(id);
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", credencial='").append(credencial).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

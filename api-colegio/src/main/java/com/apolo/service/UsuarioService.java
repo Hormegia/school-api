@@ -1,5 +1,7 @@
 package com.apolo.service;
 
+import com.apolo.model.Rol;
+import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.model.TokenActivacionUsuario;
 import com.apolo.model.Usuario;
@@ -53,8 +55,28 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public void actualizarUsuario(Usuario usuario) {
-        userRepository.save(usuario);
+    public Usuario asociarRol(Usuario usuario, Rol rol) {
+        return null;
+    }
+
+    @Override
+    public Usuario actualizarUsuario(Usuario usuario) {
+        Integer idUsuario = usuario.getId();
+
+        if(idUsuario == null)
+            throw new ObjetoNoEncontradoException("Se debe enviar un Id");
+
+        Optional<Usuario> ususarioOption = userRepository.findById(idUsuario);
+
+        if(!ususarioOption.isPresent())
+            throw new ObjetoNoEncontradoException(String.format("No existe un usuario con el id %s", idUsuario));
+
+        Usuario usuarioDb = ususarioOption.get();
+
+        if(usuarioDb.getCorreo().equals(usuario.getCorreo()))
+            throw new ErrorGeneralExcepcion("No se le puede cambiar el correo al usuario");
+
+        return userRepository.save(usuario);
     }
 
     @Override
@@ -67,4 +89,7 @@ public class UsuarioService implements IUsuarioService {
 
         return userRepository.save(usuario);
     }
+
+
+
 }
