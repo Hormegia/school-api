@@ -3,6 +3,7 @@ package com.apolo.resource;
 
 //import com.apolo.repository.UsuarioDaoService;
 
+import com.apolo.model.Rol;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.model.Matricula;
 import com.apolo.model.TokenActivacionUsuario;
@@ -50,18 +51,18 @@ public class UsuarioJPAResource {
     //todos los usuarios
     // GET  /usuario/
     @GetMapping("/usuarios")
-    public List<Usuario> retrieveAllUsuarios(){
+    public List<Usuario> retrieveAllUsuarios() {
         return userRepository.findAll();
     }
 
     //Trae un usuario por id
     // GET  /usuarios/id
     @GetMapping("/usuarios/{id}")
-    public EntityModel<Usuario> retrieveUsuario(@PathVariable int id){
-        Optional<Usuario> ususario = userRepository.findById(id);
-        if(!ususario.isPresent())
-            throw new ObjetoNoEncontradoException("id-"+id);
+    public EntityModel<Usuario> retrieveUsuario(@PathVariable int id) {
 
+        Optional<Usuario> ususario = userRepository.findById(id);
+        if (!ususario.isPresent())
+            throw new ObjetoNoEncontradoException("id-" + id);
 
         //HATEOAS
         EntityModel<Usuario> resource = EntityModel.of(ususario.get());
@@ -69,7 +70,7 @@ public class UsuarioJPAResource {
         WebMvcLinkBuilder linkTo =
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsuarios());
 
-        resource.add(linkTo.withRel("todos-us"));
+        resource.add(linkTo.withRel("obtener-todos"));
 
 
         return resource;
@@ -79,50 +80,72 @@ public class UsuarioJPAResource {
     //eliminar usuario
     //usuarios/id
     @DeleteMapping("/usuarios/{id}")
-    public void deleteUsuario(@PathVariable int id){
+    public void deleteUsuario(@PathVariable int id) {
         userRepository.deleteById(id);
     }
+
+
+    @PostMapping("/usuarios/crear")
+    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody Usuario usuario) {
+
+
+        String appUrl = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/usuarios/activar").toUriString();
+        Locale locale = LocaleContextHolder.getLocale();
+
+
+        Usuario usuarioNevo = iUsuarioService.registrarUsuario(usuario);
+        //se lanza evento para enviar correo con el lik de activación
+        eventPublisher.publishEvent(new onRegistroUsuarioEvent(usuarioNevo,
+                appUrl, locale));
+
+        /* Responde en el header el lugar donde se puede encontrar la información
+         * del usuario
+         */
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/usuarios/{id}")
+                .buildAndExpand(
+                        usuarioNevo.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 
     //Actualizar Usuario
     //Se maneja otro para crear usuarios porque es necesario la autenticación
     // Post  /usuarios/
     @PostMapping("/usuarios")
-    public ResponseEntity<Object> createUsuario(@Valid @RequestBody Usuario usuario){
+    public ResponseEntity<Usuario> editarUsuario(@Valid @RequestBody Usuario usuario) {
 
-        Usuario usuarioNevo = iUsuarioService.registrarUsuario(usuario);
-
-        String appUrl = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/activar").toUriString();
-        Locale locale = LocaleContextHolder.getLocale();
-
-        eventPublisher.publishEvent(new onRegistroUsuarioEvent(usuarioNevo,
-                appUrl, locale));
+        Usuario usuarioActualizado = iUsuarioService.actualizarUsuario(usuario);
 
         /* Responde en el header el lugar donde se puede encontrar la información
-         * del usuario creado
+         * del usuario
          */
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(
-                usuarioNevo.getId()).toUri();
+                        usuarioActualizado.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
+
     @GetMapping("/usuarios/{id}/matriculas")
-    public List<Matricula> encontrasMatriculas(@PathVariable int id){
+    public List<Matricula> encontrasMatriculas(@PathVariable int id) {
         Optional<Usuario> userOptional = userRepository.findById(id);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new ObjetoNoEncontradoException("id-" + id);
         }
         return userOptional.get().getMatriculas();
     }
 
     @GetMapping("/usuarios/activar/{token}")
-    public String activarUsuario(@PathVariable String token){
+    public String activarUsuario(@PathVariable String token) {
         TokenActivacionUsuario tokenActivacionUsuario = iUsuarioService.getTokenActivacion(token);
-        if(tokenActivacionUsuario == null)
+        if (tokenActivacionUsuario == null)
             throw new ObjetoNoEncontradoException("Token Expirado");
 
         Usuario usuario = iUsuarioService.getUsuario(token);
@@ -133,23 +156,25 @@ public class UsuarioJPAResource {
         return "usuario habilitado";
     }
 
-    @PostMapping("/usuarios/{id}/matriculas")
-    public ResponseEntity<Object> crearMatricula(@PathVariable int id, @RequestBody Matricula matricula){
-        Optional<Usuario> usuarioOptional = userRepository.findById(id);
-        if(!usuarioOptional.isPresent()){
-            throw new ObjetoNoEncontradoException("id-" + id);
-        }
-        Usuario usuario = usuarioOptional.get();
+    @PostMapping("/usuarios/roles/")
+    public ResponseEntity<Usuario> crearRolUsuario(@Valid @RequestBody Usuario usuario ) {
 
-        matricula.setUsuario(usuario);
-        matriculaRepository.save(matricula);
+//        Optional<Usuario> usuarioOptional = userRepository.findById(id);
+//
+//        if(!usuarioOptional.isPresent()){
+//            throw new ObjetoNoEncontradoException("id-" + id);
+//        }
+//        Usuario usuario = usuarioOptional.get();
+//
+//        matricula.setUsuario(usuario);
+//        matriculaRepository.save(matricula);
 
         // /usuario/{id}
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(
-                        matricula.getId()).toUri();
+                        1).toUri();
         System.out.println(ResponseEntity.created(location).build());
 
         return ResponseEntity.created(location).build();
