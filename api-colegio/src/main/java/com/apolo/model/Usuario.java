@@ -45,6 +45,7 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuarioCreacion")
     @JsonIgnoreProperties("usuarioCreacion")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY )
     private List<RolUsuario> rolesCreados;
 
 

@@ -3,11 +3,8 @@ package com.apolo.resource;
 
 //import com.apolo.repository.UsuarioDaoService;
 
-import com.apolo.model.Rol;
+import com.apolo.model.*;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
-import com.apolo.model.Matricula;
-import com.apolo.model.TokenActivacionUsuario;
-import com.apolo.model.Usuario;
 import com.apolo.event.onRegistroUsuarioEvent;
 import com.apolo.repository.MatriculaRepository;
 import com.apolo.repository.UserRepository;
@@ -38,13 +35,10 @@ public class UsuarioJPAResource {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final MatriculaRepository matriculaRepository;
-
     @Autowired
-    public UsuarioJPAResource(IUsuarioService iUsuarioService, UserRepository userRepository, MatriculaRepository matriculaRepository, ApplicationEventPublisher eventPublisher) {
+    public UsuarioJPAResource(IUsuarioService iUsuarioService, UserRepository userRepository, ApplicationEventPublisher eventPublisher) {
         this.iUsuarioService = iUsuarioService;
         this.userRepository = userRepository;
-        this.matriculaRepository = matriculaRepository;
         this.eventPublisher = eventPublisher;
     }
 
@@ -117,30 +111,11 @@ public class UsuarioJPAResource {
     //Se maneja otro para crear usuarios porque es necesario la autenticación
     // Post  /usuarios/
     @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> editarUsuario(@Valid @RequestBody Usuario usuario) {
+    public EntityModel<Usuario> editarUsuario(@Valid @RequestBody Usuario usuario) {
 
         Usuario usuarioActualizado = iUsuarioService.actualizarUsuario(usuario);
 
-        /* Responde en el header el lugar donde se puede encontrar la información
-         * del usuario
-         */
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(
-                        usuarioActualizado.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
-
-
-    @GetMapping("/usuarios/{id}/matriculas")
-    public List<Matricula> encontrasMatriculas(@PathVariable int id) {
-        Optional<Usuario> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            throw new ObjetoNoEncontradoException("id-" + id);
-        }
-        return userOptional.get().getMatriculas();
+        return EntityModel.of(usuarioActualizado);
     }
 
     @GetMapping("/usuarios/activar/{token}")
@@ -157,27 +132,18 @@ public class UsuarioJPAResource {
         return "usuario habilitado";
     }
 
-    @PostMapping("/usuarios/roles/")
-    public ResponseEntity<Usuario> crearRolUsuario(@Valid @RequestBody Usuario usuario ) {
+    @PostMapping("/usuarios/{id}/roles")
+    public EntityModel<RolUsuario> crearRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
 
-//        Optional<Usuario> usuarioOptional = userRepository.findById(id);
-//
-//        if(!usuarioOptional.isPresent()){
-//            throw new ObjetoNoEncontradoException("id-" + id);
-//        }
-//        Usuario usuario = usuarioOptional.get();
-//
-//        matricula.setUsuario(usuario);
-//        matriculaRepository.save(matricula);
+        RolUsuario nuevoRolUsuario = iUsuarioService.agregarRolUsuario(rolUsuario, id);
 
-        // /usuario/{id}
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(
-                        1).toUri();
-        System.out.println(ResponseEntity.created(location).build());
 
-        return ResponseEntity.created(location).build();
+        return EntityModel.of(nuevoRolUsuario);
+    }
+
+    @DeleteMapping("/usuarios/{id}/roles")
+    public void eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+
+        iUsuarioService.eliminarRolUsuario(rolUsuario, id);
     }
 }
