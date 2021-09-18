@@ -37,4 +37,4 @@ build/
 /.mvn/wrapper/MavenWrapperDownloader.java
 
 #configLocal
-/application.yml
+src/main/resources/application.yml
