@@ -45,7 +45,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.get().getCorreo(), usuario.get().getPassword(), enabled, accountNonExpired,
-                credentialsNonExpired, accountNonLocked, getAuthorities(usuario.get().getRoles()));
+                credentialsNonExpired, accountNonLocked, new ArrayList<>());
 
     }
 

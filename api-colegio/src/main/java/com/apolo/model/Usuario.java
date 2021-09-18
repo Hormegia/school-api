@@ -25,7 +25,6 @@ public class Usuario {
     @NotNull
     @Pattern(regexp="^(.+)@(.+)$",
             message = "no cumple con la estructura de un correo")
-
     @NotNull
     private String correo;
 
