@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class RolJPAResource {
 
 
@@ -51,8 +52,8 @@ public class RolJPAResource {
         rolRepository.deleteById(id);
     }
 
-    @PostMapping("/roles/")
-    public ResponseEntity<Rol> creaOEditarRol(@Valid @RequestBody Rol rol) {
+    @PostMapping("/roles")
+    public EntityModel<Rol> creaOEditarRol(@Valid @RequestBody Rol rol) {
         Integer idRol = rol.getId();
 
         if (idRol != null) {
@@ -63,16 +64,7 @@ public class RolJPAResource {
 
         Rol nuevoRol = rolRepository.save(rol);
 
-        /* Responde en el header el lugar donde se puede encontrar la información
-         * del rol creado
-         */
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(
-                        nuevoRol.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+        return EntityModel.of(nuevoRol);
 
     }
 }

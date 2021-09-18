@@ -1,6 +1,8 @@
 package com.apolo.service;
 
 import com.apolo.model.Rol;
+import com.apolo.model.RolUsuario;
+import com.apolo.repository.RolUsuarioRepository;
 import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.model.TokenActivacionUsuario;
@@ -25,11 +27,14 @@ public class UsuarioService implements IUsuarioService {
 
     private final TokenActivacionUsuarioRepository tokenActivacionUsuarioRepository;
 
+    private final RolUsuarioRepository rolUsuarioRepository;
+
     @Autowired
-    public UsuarioService(PasswordEncoder passwordEncoder, UserRepository userRepository, TokenActivacionUsuarioRepository tokenActivacionUsuarioRepository) {
+    public UsuarioService(PasswordEncoder passwordEncoder, UserRepository userRepository, TokenActivacionUsuarioRepository tokenActivacionUsuarioRepository, RolUsuarioRepository rolUsuarioRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.tokenActivacionUsuarioRepository = tokenActivacionUsuarioRepository;
+        this.rolUsuarioRepository = rolUsuarioRepository;
     }
 
 
@@ -55,8 +60,25 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario asociarRol(Usuario usuario, Rol rol) {
-        return null;
+    public RolUsuario agregarRolUsuario(RolUsuario rolUsuario, int id) {
+        Optional<Usuario> usuarioOptional = userRepository.findById(id);
+
+
+        if(!usuarioOptional.isPresent()){
+            throw new ObjetoNoEncontradoException("id-" + id);
+        }
+
+        Usuario usuario = usuarioOptional.get();
+        if(usuario.getId() != rolUsuario.getUsuario().getId())
+            throw new ErrorGeneralExcepcion("No coinciden los id del usuario y del rol");
+
+
+        return rolUsuarioRepository.save(rolUsuario);
+    }
+
+    @Override
+    public void eliminarRolUsuario(RolUsuario rolUsuario, int id) {
+        rolUsuarioRepository.deleteById(rolUsuario.getId());
     }
 
     @Override

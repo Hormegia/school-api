@@ -35,7 +35,7 @@ public class MyUserDetailsService implements UserDetailsService {
         Optional<Usuario> usuario = userRepository.findUsuarioByCorreo(nombreUsuario);
 
         if (!usuario.isPresent()) {
-            throw new ObjetoNoEncontradoException(String.format("%s no encontrado", usuario.getClass().getName()));
+            throw new ObjetoNoEncontradoException("Usuario no encontrado");
         }
 
         boolean enabled = usuario.get().getHabilitado();
@@ -45,14 +45,14 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.get().getCorreo(), usuario.get().getPassword(), enabled, accountNonExpired,
-                credentialsNonExpired, accountNonLocked, new ArrayList<>());
+                credentialsNonExpired, accountNonLocked, getAuthorities(usuario.get().getRoles()));
 
     }
 
-    private static List<GrantedAuthority> getAuthorities(List<RolUsuario> roles) {
+    private static List<GrantedAuthority> getAuthorities(List<RolUsuario>roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (RolUsuario rol : roles) {
-            authorities.add(new SimpleGrantedAuthority("·····"));
+            authorities.add(new SimpleGrantedAuthority(rol.getRol().getCredencial()));
         }
         return authorities;
 
