@@ -7,6 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(name = "UniqueUsuarioAndRol", columnNames={"usuario_id", "rol_id"})
+)
+
 @Entity
 @ApiModel(description = "Rol asociado a un usuario")
 public class RolUsuario {
