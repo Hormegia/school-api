@@ -1,6 +1,6 @@
 package com.apolo.service;
 
-import com.apolo.model.Rol;
+
 import com.apolo.model.RolUsuario;
 import com.apolo.repository.RolUsuarioRepository;
 import com.apolo.spring.exception.ErrorGeneralExcepcion;
@@ -10,10 +10,13 @@ import com.apolo.model.Usuario;
 import com.apolo.repository.TokenActivacionUsuarioRepository;
 import com.apolo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -72,6 +75,10 @@ public class UsuarioService implements IUsuarioService {
         if(usuario.getId() != rolUsuario.getUsuario().getId())
             throw new ErrorGeneralExcepcion("No coinciden los id del usuario y del rol");
 
+        Usuario usuarioAtenticado = userRepository.findUsuarioByCorreo(SecurityContextHolder.getContext().getAuthentication().getName().toString()).get();
+
+        rolUsuario.setUsuarioCreacion(usuarioAtenticado);
+        rolUsuario.setFechaCreacion(new Date());
 
         return rolUsuarioRepository.save(rolUsuario);
     }

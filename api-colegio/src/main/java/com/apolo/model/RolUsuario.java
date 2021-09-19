@@ -21,14 +21,14 @@ public class RolUsuario {
     private Integer id;
 
     @ManyToOne()
-    @JsonIgnoreProperties("roles")
+    @JsonIgnoreProperties(value = {"roles",  "rolesCreados"})
     private Usuario usuario;
 
     @ManyToOne()
     private Rol rol;
 
     @ManyToOne()
-    @JsonIgnoreProperties("roles")
+    @JsonIgnoreProperties(value = {"roles", "rolesCreados"})
     private Usuario usuarioCreacion;
 
 
