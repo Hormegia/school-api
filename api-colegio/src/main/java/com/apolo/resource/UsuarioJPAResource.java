@@ -3,13 +3,12 @@ package com.apolo.resource;
 
 //import com.apolo.repository.UsuarioDaoService;
 
+import com.apolo.dao.DeleteResponse;
 import com.apolo.model.*;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.event.onRegistroUsuarioEvent;
-import com.apolo.repository.MatriculaRepository;
 import com.apolo.repository.UserRepository;
 import com.apolo.service.IUsuarioService;
-import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.i18n.LocaleContextHolder;

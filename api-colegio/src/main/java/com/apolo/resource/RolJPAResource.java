@@ -1,21 +1,16 @@
 package com.apolo.resource;
 
-import com.apolo.model.DeleteResponse;
+import com.apolo.dao.DeleteResponse;
 import com.apolo.model.Rol;
-import com.apolo.model.Usuario;
 import com.apolo.repository.RolRepository;
 import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
-import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

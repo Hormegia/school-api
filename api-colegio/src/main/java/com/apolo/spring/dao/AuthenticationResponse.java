@@ -1,4 +1,4 @@
-package com.apolo.spring.model;
+package com.apolo.spring.dao;
 
 import java.io.Serializable;
 

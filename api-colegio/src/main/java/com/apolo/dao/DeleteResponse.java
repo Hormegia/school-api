@@ -1,4 +1,4 @@
-package com.apolo.model;
+package com.apolo.dao;
 
 import java.io.Serializable;
 
