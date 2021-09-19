@@ -3,10 +3,10 @@ package com.apolo.resource;
 
 //import com.apolo.repository.UsuarioDaoService;
 
+import com.apolo.dao.DeleteResponse;
 import com.apolo.model.*;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.event.onRegistroUsuarioEvent;
-import com.apolo.repository.MatriculaRepository;
 import com.apolo.repository.UserRepository;
 import com.apolo.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE})
 public class UsuarioJPAResource {
 
 
@@ -75,8 +75,13 @@ public class UsuarioJPAResource {
     //eliminar usuario
     //usuarios/id
     @DeleteMapping("/usuarios/{id}")
-    public void deleteUsuario(@PathVariable int id) {
+    public ResponseEntity<?> deleteUsuario(@PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
+
         userRepository.deleteById(id);
+
+        return ResponseEntity.ok(resource);
     }
 
 
@@ -142,8 +147,12 @@ public class UsuarioJPAResource {
     }
 
     @DeleteMapping("/usuarios/{id}/roles")
-    public void eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+    public ResponseEntity<?> eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
 
         iUsuarioService.eliminarRolUsuario(rolUsuario, id);
+
+        return ResponseEntity.ok(resource);
     }
 }

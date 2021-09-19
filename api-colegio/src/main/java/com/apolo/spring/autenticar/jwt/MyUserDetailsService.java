@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
 
 
@@ -45,7 +47,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.get().getCorreo(), usuario.get().getPassword(), enabled, accountNonExpired,
-                credentialsNonExpired, accountNonLocked, new ArrayList<>());
+                credentialsNonExpired, accountNonLocked, getAuthorities(usuario.get().getRoles()));
 
     }
 

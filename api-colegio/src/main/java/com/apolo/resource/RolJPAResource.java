@@ -1,22 +1,21 @@
 package com.apolo.resource;
 
+import com.apolo.dao.DeleteResponse;
 import com.apolo.model.Rol;
-import com.apolo.model.Usuario;
 import com.apolo.repository.RolRepository;
+import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class RolJPAResource {
 
 
@@ -48,8 +47,13 @@ public class RolJPAResource {
     //eliminar rol
     //roles/id
     @DeleteMapping("/roles/{id}")
-    public void deleteRol(@PathVariable int id) {
+    public ResponseEntity<?> deleteRol(@PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
+
         rolRepository.deleteById(id);
+
+        return ResponseEntity.ok(resource);
     }
 
     @PostMapping("/roles")
@@ -59,7 +63,15 @@ public class RolJPAResource {
         if (idRol != null) {
             Optional<Rol> rolExistente = rolRepository.findById(idRol);
             if (!rolExistente.isPresent())
-                throw new ObjetoNoEncontradoException("id-" + idRol);
+                throw new ObjetoNoEncontradoException("No existe un rol con el id " + idRol);
+        }else{
+
+            String credencial = rol.getCredencial();
+
+            Optional<Rol>  rolExistente  = rolRepository.findByCredencial(credencial);
+
+            if (rolExistente.isPresent())
+                throw new ErrorGeneralExcepcion("No puedes crear otro rol con la credencial " + credencial);
         }
 
         Rol nuevoRol = rolRepository.save(rol);
