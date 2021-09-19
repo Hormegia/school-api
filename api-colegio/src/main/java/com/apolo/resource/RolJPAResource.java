@@ -1,9 +1,11 @@
 package com.apolo.resource;
 
+import com.apolo.model.DeleteResponse;
 import com.apolo.model.Rol;
 import com.apolo.model.Usuario;
 import com.apolo.repository.RolRepository;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
+import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class RolJPAResource {
 
 
@@ -48,8 +50,13 @@ public class RolJPAResource {
     //eliminar rol
     //roles/id
     @DeleteMapping("/roles/{id}")
-    public void deleteRol(@PathVariable int id) {
+    public ResponseEntity<?> deleteRol(@PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
+
         rolRepository.deleteById(id);
+
+        return ResponseEntity.ok(resource);
     }
 
     @PostMapping("/roles")

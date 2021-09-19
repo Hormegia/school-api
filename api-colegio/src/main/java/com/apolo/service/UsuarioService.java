@@ -65,7 +65,7 @@ public class UsuarioService implements IUsuarioService {
 
 
         if(!usuarioOptional.isPresent()){
-            throw new ObjetoNoEncontradoException("id-" + id);
+            throw new ObjetoNoEncontradoException("No se encuentra el rol con el id:" + id);
         }
 
         Usuario usuario = usuarioOptional.get();

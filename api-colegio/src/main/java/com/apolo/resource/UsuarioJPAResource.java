@@ -9,6 +9,7 @@ import com.apolo.event.onRegistroUsuarioEvent;
 import com.apolo.repository.MatriculaRepository;
 import com.apolo.repository.UserRepository;
 import com.apolo.service.IUsuarioService;
+import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -25,7 +26,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE})
 public class UsuarioJPAResource {
 
 
@@ -75,8 +76,13 @@ public class UsuarioJPAResource {
     //eliminar usuario
     //usuarios/id
     @DeleteMapping("/usuarios/{id}")
-    public void deleteUsuario(@PathVariable int id) {
+    public ResponseEntity<?> deleteUsuario(@PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
+
         userRepository.deleteById(id);
+
+        return ResponseEntity.ok(resource);
     }
 
 
