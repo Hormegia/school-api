@@ -147,8 +147,12 @@ public class UsuarioJPAResource {
     }
 
     @DeleteMapping("/usuarios/{id}/roles")
-    public void eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+    public ResponseEntity<?> eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+
+        EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
 
         iUsuarioService.eliminarRolUsuario(rolUsuario, id);
+
+        return ResponseEntity.ok(resource);
     }
 }
