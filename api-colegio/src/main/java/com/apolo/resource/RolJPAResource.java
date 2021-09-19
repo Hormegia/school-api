@@ -4,6 +4,7 @@ import com.apolo.model.DeleteResponse;
 import com.apolo.model.Rol;
 import com.apolo.model.Usuario;
 import com.apolo.repository.RolRepository;
+import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.spring.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +68,15 @@ public class RolJPAResource {
         if (idRol != null) {
             Optional<Rol> rolExistente = rolRepository.findById(idRol);
             if (!rolExistente.isPresent())
-                throw new ObjetoNoEncontradoException("id-" + idRol);
+                throw new ObjetoNoEncontradoException("No existe un rol con el id " + idRol);
+        }else{
+
+            String credencial = rol.getCredencial();
+
+            Optional<Rol>  rolExistente  = rolRepository.findByCredencial(credencial);
+
+            if (rolExistente.isPresent())
+                throw new ErrorGeneralExcepcion("No puedes crear otro rol con la credencial " + credencial);
         }
 
         Rol nuevoRol = rolRepository.save(rol);
