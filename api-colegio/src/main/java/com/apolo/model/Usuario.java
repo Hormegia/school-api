@@ -49,6 +49,13 @@ public class Usuario {
     private List<RolUsuario> rolesCreados;
 
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Acudiente acudiente;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Colaborador colaborador;
+
+
 
     public List<Matricula> getMatriculas() {
         return matriculas;
@@ -123,6 +130,22 @@ public class Usuario {
 
     public Integer getId() {
         return id;
+    }
+
+    public Acudiente getAcudiente() {
+        return acudiente;
+    }
+
+    public void setAcudiente(Acudiente acudiente) {
+        this.acudiente = acudiente;
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 
     @Override

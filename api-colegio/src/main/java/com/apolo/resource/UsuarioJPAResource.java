@@ -4,7 +4,11 @@ package com.apolo.resource;
 //import com.apolo.repository.UsuarioDaoService;
 
 import com.apolo.dao.DeleteResponse;
+import com.apolo.dao.UsuarioAcudienteRequest;
+import com.apolo.dao.UsuarioColaboradorRequest;
 import com.apolo.model.*;
+import com.apolo.repository.AcudienteRepository;
+import com.apolo.repository.ColaboradorRepository;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.event.onRegistroUsuarioEvent;
 import com.apolo.repository.UserRepository;
@@ -35,11 +39,17 @@ public class UsuarioJPAResource {
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final AcudienteRepository acudienteRepository;
+
+    private final ColaboradorRepository colaboradorRepository;
+
     @Autowired
-    public UsuarioJPAResource(IUsuarioService iUsuarioService, UserRepository userRepository, ApplicationEventPublisher eventPublisher) {
+    public UsuarioJPAResource(IUsuarioService iUsuarioService, UserRepository userRepository, ApplicationEventPublisher eventPublisher, AcudienteRepository acudienteRepository, ColaboradorRepository colaboradorRepository) {
         this.iUsuarioService = iUsuarioService;
         this.userRepository = userRepository;
         this.eventPublisher = eventPublisher;
+        this.acudienteRepository = acudienteRepository;
+        this.colaboradorRepository = colaboradorRepository;
     }
 
 
@@ -85,9 +95,17 @@ public class UsuarioJPAResource {
     }
 
 
-    @PostMapping("/usuarios/crear")
-    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody Usuario usuario) {
+    @PostMapping("/usuarios/acudientes/crear")
+    public ResponseEntity<Usuario> crearUsuarioAcudiente(@Valid @RequestBody UsuarioAcudienteRequest usuarioAcudienteRequest) {
 
+        Usuario usuario = usuarioAcudienteRequest.getUsuario();
+
+
+        Acudiente acudiente = usuarioAcudienteRequest.getAcudiente();
+
+        usuario.setAcudiente(acudiente);
+
+        acudienteRepository.save(acudiente);
 
         String appUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/usuarios/activar").toUriString();
@@ -111,6 +129,40 @@ public class UsuarioJPAResource {
         return ResponseEntity.created(location).build();
     }
 
+
+    @PostMapping("/usuarios/colaboradores/crear")
+    public ResponseEntity<Usuario> crearUsuarioColaborador(@Valid @RequestBody UsuarioColaboradorRequest usuarioColaboradorRequest) {
+
+        Usuario usuario = usuarioColaboradorRequest.getUsuario();
+
+
+        Colaborador colaborador = usuarioColaboradorRequest.getColaborador();
+
+        usuario.setColaborador(colaborador);
+
+        colaboradorRepository.save(colaborador);
+
+        String appUrl = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/usuarios/activar").toUriString();
+        Locale locale = LocaleContextHolder.getLocale();
+
+
+        Usuario usuarioNevo = iUsuarioService.registrarUsuario(usuario);
+        //se lanza evento para enviar correo con el lik de activación
+        eventPublisher.publishEvent(new onRegistroUsuarioEvent(usuarioNevo,
+                appUrl, locale));
+
+        /* Responde en el header el lugar donde se puede encontrar la información
+         * del usuario
+         */
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/usuarios/{id}")
+                .buildAndExpand(
+                        usuarioNevo.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
 
     //Actualizar Usuario
     //Se maneja otro para crear usuarios porque es necesario la autenticación
