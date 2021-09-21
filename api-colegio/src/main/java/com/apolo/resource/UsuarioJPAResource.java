@@ -4,6 +4,7 @@ package com.apolo.resource;
 //import com.apolo.repository.UsuarioDaoService;
 
 import com.apolo.dao.DeleteResponse;
+import com.apolo.dao.GenericResponse;
 import com.apolo.dao.UsuarioAcudienteRequest;
 import com.apolo.dao.UsuarioColaboradorRequest;
 import com.apolo.model.*;
@@ -176,7 +177,7 @@ public class UsuarioJPAResource {
     }
 
     @GetMapping("/usuarios/activar/{token}")
-    public String activarUsuario(@PathVariable String token) {
+    public GenericResponse activarUsuario(@PathVariable String token) {
         TokenActivacionUsuario tokenActivacionUsuario = iUsuarioService.getTokenActivacion(token);
         if (tokenActivacionUsuario == null)
             throw new ObjetoNoEncontradoException("Token Expirado");
@@ -186,7 +187,10 @@ public class UsuarioJPAResource {
         usuario.setHabilitado(true);
         userRepository.save(usuario);
 
-        return "usuario habilitado";
+        GenericResponse response = new GenericResponse();
+        response.setMensaje("El usuario ha sido habilitado");
+
+        return response;
     }
 
     @PostMapping("/usuarios/{id}/roles")
