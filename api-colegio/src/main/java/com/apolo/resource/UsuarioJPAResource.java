@@ -132,7 +132,7 @@ public class UsuarioJPAResource {
 
 
     @PostMapping("/usuarios/colaboradores/crear")
-    public ResponseEntity<Usuario> crearUsuarioColaborador(@Valid @RequestBody UsuarioColaboradorRequest usuarioColaboradorRequest) {
+    public EntityModel<Usuario>  crearUsuarioColaborador(@Valid @RequestBody UsuarioColaboradorRequest usuarioColaboradorRequest) {
 
         Usuario usuario = usuarioColaboradorRequest.getUsuario();
 
@@ -162,7 +162,7 @@ public class UsuarioJPAResource {
                 .buildAndExpand(
                         usuarioNevo.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return EntityModel.of(usuarioNevo);
     }
 
     //Actualizar Usuario
