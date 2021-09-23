@@ -18,6 +18,8 @@ public class Persona {
 
     private String documento;
 
+    private String numeroCelular;
+
 
     public Persona() {
 
@@ -69,5 +71,13 @@ public class Persona {
 
     public void setDocumento(String documento) {
         this.documento = documento;
+    }
+
+    public String getNumeroCelular() {
+        return numeroCelular;
+    }
+
+    public void setNumeroCelular(String numeroCelular) {
+        this.numeroCelular = numeroCelular;
     }
 }
