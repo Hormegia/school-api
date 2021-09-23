@@ -1,5 +1,6 @@
 package com.apolo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Acudiente extends Persona{
     private Integer id;
 
     @OneToOne(mappedBy = "acudiente")
+    @JsonIgnoreProperties(value = {"acudiente"})
     private Usuario usuario;
 
 
