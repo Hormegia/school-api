@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @ApiModel(description = "detalle periodo")
 
-public class Periodo {
+public class PeriodoAcademico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public class Periodo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinInscripcion;
 
-    public Periodo (){this.estado =false;}
+    public PeriodoAcademico(){}
 
     public Boolean getEstado() {
         return estado;
@@ -104,16 +104,6 @@ public class Periodo {
         this.fechaFinInscripcion = fechaFinInscripcion;
     }
 
-    public Periodo(Integer id, String nombre, Boolean estado, Date fechaCreacionPeriodo, Date fechaInicio, Date fechaFin, Date fechaInicioInscripcion, Date fechaFinInscripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.estado = estado;
-        this.fechaCreacionPeriodo = fechaCreacionPeriodo;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.fechaInicioInscripcion = fechaInicioInscripcion;
-        this.fechaFinInscripcion = fechaFinInscripcion;
-    }
 
     @Override
     public String toString() {
