@@ -33,10 +33,16 @@ public class PeriodoAcademico {
     private Date fechaFin;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicioInscripcion;
+    private Date fechaInicioInscripcion1;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFinInscripcion;
+    private Date fechaFinInscripcion1;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInicioInscripcion2;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFinInscripcion2;
 
     public PeriodoAcademico(){}
 
@@ -88,34 +94,52 @@ public class PeriodoAcademico {
         this.fechaFin = fechaFin;
     }
 
-    public Date getFechaInicioInscripcion() {
-        return fechaInicioInscripcion;
+    public Date getFechaInicioInscripcion1() {
+        return fechaInicioInscripcion1;
     }
 
-    public void setFechaInicioInscripcion(Date fechaInicioInscripcion) {
-        this.fechaInicioInscripcion = fechaInicioInscripcion;
+    public void setFechaInicioInscripcion1(Date fechaInicioInscripcion) {
+        this.fechaInicioInscripcion1 = fechaInicioInscripcion;
     }
 
-    public Date getFechaFinInscripcion() {
-        return fechaFinInscripcion;
+    public Date getFechaFinInscripcion1() {
+        return fechaFinInscripcion1;
     }
 
-    public void setFechaFinInscripcion(Date fechaFinInscripcion) {
-        this.fechaFinInscripcion = fechaFinInscripcion;
+    public void setFechaFinInscripcion1(Date fechaFinInscripcion) {
+        this.fechaFinInscripcion1 = fechaFinInscripcion;
     }
 
+    public Date getFechaInicioInscripcion2() {
+        return fechaInicioInscripcion2;
+    }
+
+    public void setFechaInicioInscripcion2(Date fechaInicioInscripcion2) {
+        this.fechaInicioInscripcion2 = fechaInicioInscripcion2;
+    }
+
+    public Date getFechaFinInscripcion2() {
+        return fechaFinInscripcion2;
+    }
+
+    public void setFechaFinInscripcion2(Date fechaFinInscripcion2) {
+        this.fechaFinInscripcion2 = fechaFinInscripcion2;
+    }
 
     @Override
     public String toString() {
-        return "Periodo{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", estado=" + estado +
-                ", fechaCreacionPeriodo=" + fechaCreacionPeriodo +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", fechaInicioInscripcion=" + fechaInicioInscripcion +
-                ", fechaFinInscripcion=" + fechaFinInscripcion +
-                '}';
+        final StringBuilder sb = new StringBuilder("PeriodoAcademico{");
+        sb.append("id=").append(id);
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", estado=").append(estado);
+        sb.append(", fechaCreacionPeriodo=").append(fechaCreacionPeriodo);
+        sb.append(", fechaInicio=").append(fechaInicio);
+        sb.append(", fechaFin=").append(fechaFin);
+        sb.append(", fechaInicioInscripcion1=").append(fechaInicioInscripcion1);
+        sb.append(", fechaFinInscripcion1=").append(fechaFinInscripcion1);
+        sb.append(", fechaInicioInscripcion2=").append(fechaInicioInscripcion2);
+        sb.append(", fechaFinInscripcion2=").append(fechaFinInscripcion2);
+        sb.append('}');
+        return sb.toString();
     }
 }
