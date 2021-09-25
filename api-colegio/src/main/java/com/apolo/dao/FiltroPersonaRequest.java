@@ -1,10 +1,8 @@
-package com.apolo.model;
+package com.apolo.dao;
 
-import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
-@MappedSuperclass
-public class Persona {
-
+public class FiltroPersonaRequest implements Serializable {
 
     private String primerNombre;
 
@@ -14,15 +12,13 @@ public class Persona {
 
     private String segundoApellido;
 
-    private TipoDocumento tipoDocumento;
+    private String tipoDocumento;
 
     private String documento;
 
     private String numeroCelular;
 
-
-    public Persona() {
-
+    public FiltroPersonaRequest() {
     }
 
     public String getPrimerNombre() {
@@ -57,11 +53,11 @@ public class Persona {
         this.segundoApellido = segundoApellido;
     }
 
-    public TipoDocumento getTipoDocumento() {
+    public String getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 

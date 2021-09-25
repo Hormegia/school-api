@@ -1,4 +1,4 @@
-package com.apolo.spring.autenticar.jwt;
+package com.apolo.spring.authentication.jwt;
 
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.model.RolUsuario;

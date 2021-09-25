@@ -1,4 +1,4 @@
-package com.apolo.spring.autenticar.jwt;
+package com.apolo.spring.authentication.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +21,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/swagger-ui/**"
+        "/v2/api-docs",
+        "/configuration/ui",
+        "/swagger-resources/**",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**",
+        "/swagger-ui/**"
+    };
+
+    private static final String [] WHITOUT_AUTH = {
+        "/autenticar",
+        "/usuarios/acudientes/crear",
+        "/usuarios/activar/**"
+
     };
     
     @Autowired
@@ -54,7 +61,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.cors();
         http.httpBasic().disable();
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/autenticar", "/usuarios/acudientes/crear", "/usuarios/activar/{token}").permitAll()
+                .authorizeRequests().antMatchers(WHITOUT_AUTH).permitAll()
                 .anyRequest().authenticated().and().cors()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
