@@ -14,7 +14,7 @@ public class Persona {
 
     private String segundoApellido;
 
-    private String tipoDocumento;
+    private TipoDocumento tipoDocumento;
 
     private String documento;
 
@@ -57,11 +57,11 @@ public class Persona {
         this.segundoApellido = segundoApellido;
     }
 
-    public String getTipoDocumento() {
+    public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 

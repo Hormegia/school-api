@@ -22,6 +22,12 @@ import java.util.Date;
  * ips
  *
  */
+
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(name = "UniqueDocumentoAndTipoDocumento", columnNames={"tipoDocumento", "documento"})
+)
+
 @Entity
 @ApiModel(description = "Estudiante registrado")
 public class Estudiante extends Persona{

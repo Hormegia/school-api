@@ -2,10 +2,12 @@ package com.apolo.model;
 
 import io.swagger.annotations.ApiModel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(name = "UniqueDocumentoAndTipoDocumento", columnNames={"tipoDocumento", "documento"})
+)
 
 @Entity
 @ApiModel(description = "Colaborador Interno")

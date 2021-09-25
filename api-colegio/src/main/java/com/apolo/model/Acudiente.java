@@ -5,6 +5,11 @@ import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(name = "UniqueDocumentoAndTipoDocumento", columnNames={"tipoDocumento", "documento"})
+)
+
 @Entity
 @ApiModel(description = "Estudiante registrado")
 public class Acudiente extends Persona{
