@@ -53,13 +53,13 @@ public class PeriodoAcademicoJPAResource {
     }
     //eliminar periodo
     //periodo/id
-    @DeleteMapping("/periodo/{id}")
+    @DeleteMapping("/periodos/{id}")
     public void deleteById(@PathVariable int id) {
         periodoAcademicoRepository.deleteById(id);
     }
 
     //crear periodo
-    @PostMapping("/periodo")
+    @PostMapping("/periodos")
     public EntityModel<PeriodoAcademico> creaOEditarPeriodo(@Valid @RequestBody PeriodoAcademico periodoAcademico) {
         Integer idPeriodo = periodoAcademico.getId();
 
