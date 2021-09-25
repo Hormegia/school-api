@@ -68,7 +68,7 @@ public class UsuarioJPAResource {
 
         Optional<Usuario> ususario = userRepository.findById(id);
         if (!ususario.isPresent())
-            throw new ObjetoNoEncontradoException("id-" + id);
+            throw new ObjetoNoEncontradoException("No se existe un usuario con id: " + id);
 
         //HATEOAS
         EntityModel<Usuario> resource = EntityModel.of(ususario.get());
