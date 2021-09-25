@@ -1,4 +1,4 @@
-package com.apolo.spring.autenticar.jwt;
+package com.apolo.spring.authentication.jwt;
 
 import com.apolo.spring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
