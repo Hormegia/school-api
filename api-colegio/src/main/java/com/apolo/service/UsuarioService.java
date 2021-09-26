@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -68,7 +67,7 @@ public class UsuarioService implements IUsuarioService {
 
 
         if(!usuarioOptional.isPresent()){
-            throw new ObjetoNoEncontradoException("No se encuentra el rol con el id:" + id);
+            throw new ObjetoNoEncontradoException("No se encuentra un usuario con el id:" + id);
         }
 
         Usuario usuario = usuarioOptional.get();

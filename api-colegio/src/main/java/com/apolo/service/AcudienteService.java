@@ -8,9 +8,14 @@ import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
 import com.apolo.spring.database.SearchOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service

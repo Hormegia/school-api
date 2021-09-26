@@ -16,16 +16,13 @@ import java.util.UUID;
 public class RegistrarListener implements ApplicationListener<onRegistroUsuarioEvent> {
 
 
-    private MessageSource messages;
-
 
     private JavaMailSender mailSender;
 
     private IUsuarioService iUsuarioService;
 
     @Autowired
-    public RegistrarListener(MessageSource messages, JavaMailSender mailSender, IUsuarioService iUsuarioService) {
-        this.messages = messages;
+    public RegistrarListener(JavaMailSender mailSender, IUsuarioService iUsuarioService) {
         this.mailSender = mailSender;
         this.iUsuarioService = iUsuarioService;
     }
@@ -51,7 +48,7 @@ public class RegistrarListener implements ApplicationListener<onRegistroUsuarioE
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(  message + "\r\n" + "http://localhost:8080" + confirmationUrl);
+        email.setText(  message + "\r\n"  + confirmationUrl);
         mailSender.send(email);
     }
 

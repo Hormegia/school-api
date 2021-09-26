@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class UsuarioJPAResource {
 
 
@@ -57,14 +57,14 @@ public class UsuarioJPAResource {
     //todos los usuarios
     // GET  /usuario/
     @GetMapping("/usuarios")
-    public List<Usuario> retrieveAllUsuarios() {
+    public List<Usuario> getAll() {
         return userRepository.findAll();
     }
 
     //Trae un usuario por id
     // GET  /usuarios/id
     @GetMapping("/usuarios/{id}")
-    public EntityModel<Usuario> retrieveUsuario(@PathVariable int id) {
+    public EntityModel<Usuario> getById(@PathVariable int id) {
 
         Optional<Usuario> ususario = userRepository.findById(id);
         if (!ususario.isPresent())
@@ -74,7 +74,7 @@ public class UsuarioJPAResource {
         EntityModel<Usuario> resource = EntityModel.of(ususario.get());
 
         WebMvcLinkBuilder linkTo =
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsuarios());
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
 
         resource.add(linkTo.withRel("obtener-todos"));
 
