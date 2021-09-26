@@ -1,6 +1,6 @@
 package com.apolo.service;
 
-import com.apolo.model.Rol;
+
 import com.apolo.model.RolUsuario;
 import com.apolo.model.TokenActivacionUsuario;
 import com.apolo.model.Usuario;

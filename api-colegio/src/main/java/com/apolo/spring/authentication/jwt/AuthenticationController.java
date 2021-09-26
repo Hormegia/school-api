@@ -71,7 +71,7 @@ public class AuthenticationController {
         EntityModel<?> resource = EntityModel.of(new AuthenticationResponse(jwt));
 
         WebMvcLinkBuilder linkTo =
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioJPAResource.class).retrieveUsuario(usuario.get().getId()));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UsuarioJPAResource.class).getById(usuario.get().getId()));
 
         resource.add(linkTo.withRel("usuario"));
 

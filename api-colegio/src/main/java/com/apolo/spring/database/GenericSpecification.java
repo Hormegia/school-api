@@ -14,11 +14,11 @@ import java.util.List;
  * La implementación se toma de https://medium.com/backend-habit/spring-jpa-make-dynamic-where-using-predicate-and-criteria-84550dfaa182
  */
 
-public class GenericSpesification<T> implements Specification<T> {
+public class GenericSpecification<T> implements Specification<T> {
 
     private List<SearchCriteria> list;
 
-    public GenericSpesification() {
+    public GenericSpecification() {
         this.list = new ArrayList<>();
     }
 
