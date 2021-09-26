@@ -2,10 +2,12 @@ package com.apolo.service;
 
 import com.apolo.dao.FiltroEstudianteRequest;
 import com.apolo.model.Estudiante;
+import com.apolo.model.Usuario;
 import com.apolo.repository.EstudianteRepository;
 import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
 import com.apolo.spring.database.SearchOperation;
+import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,16 @@ public class EstudianteService implements IEstudianteService {
 
     @Override
     public Optional<Estudiante> findById(Integer id) {
+
+        Optional<Estudiante> estudiante = estudianteRepository.findById(id);
+        if (!estudiante.isPresent())
+            throw new ObjetoNoEncontradoException("No se existe un estudiante el con id: " + id);
+
+        return estudiante;
+    }
+
+    @Override
+    public Optional<Estudiante> crearOEditarEstudiante(Estudiante estudiante) {
         return Optional.empty();
     }
 

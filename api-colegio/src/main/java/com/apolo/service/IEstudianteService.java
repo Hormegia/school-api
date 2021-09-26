@@ -13,6 +13,8 @@ public interface IEstudianteService {
 
     Optional<Estudiante> findById(Integer id);
 
+    Optional<Estudiante> crearOEditarEstudiante (Estudiante estudiante);
+
     void deleteById (Integer id);
 }
 

@@ -4,19 +4,18 @@ import com.apolo.dao.FiltroAcudienteRequest;
 import com.apolo.model.Acudiente;
 import com.apolo.model.Estudiante;
 import com.apolo.repository.AcudienteRepository;
+import com.apolo.repository.EstudianteRepository;
 import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
 import com.apolo.spring.database.SearchOperation;
+import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import javax.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,9 +23,12 @@ public class AcudienteService implements IAcudienteService{
 
     private final AcudienteRepository acudienteRepository;
 
+    private final EstudianteRepository estudianteRepository;
+
     @Autowired
-    public AcudienteService(AcudienteRepository acudienteRepository) {
+    public AcudienteService(AcudienteRepository acudienteRepository, EstudianteRepository estudianteRepository) {
         this.acudienteRepository = acudienteRepository;
+        this.estudianteRepository = estudianteRepository;
     }
 
 
@@ -59,7 +61,22 @@ public class AcudienteService implements IAcudienteService{
     }
 
     @Override
-    public Acudiente asignarEstudiante(Estudiante estudiante) {
-        return null;
+    public Acudiente asignarEstudiante(Acudiente acudiente, Estudiante estudiante) {
+        Estudiante estudianteNuevo = estudianteRepository.save(estudiante);
+        estudianteNuevo.setAcudiente(acudiente);
+        return acudiente;
     }
+
+
+
+    @Override
+    public Optional<Acudiente> findById(Integer id) {
+        Optional<Acudiente> acudiente = acudienteRepository.findById(id);
+        if (!acudiente.isPresent())
+            throw new ObjetoNoEncontradoException("No se existe un acudiente con el usuario id: " + id);
+
+        return acudiente;
+    }
+
+
 }
