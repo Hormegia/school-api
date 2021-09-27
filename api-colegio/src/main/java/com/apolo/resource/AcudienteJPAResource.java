@@ -55,7 +55,7 @@ public class AcudienteJPAResource {
 
 
     //retorna todos los estudiantes de un usuario
-    @PostMapping("/acudientes/{id}/estudiantes")
+    @GetMapping("/acudientes/{id}/estudiantes")
     public List<Estudiante> getEstudiantes(@PathVariable int id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();
