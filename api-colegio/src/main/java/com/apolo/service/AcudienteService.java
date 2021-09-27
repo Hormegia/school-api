@@ -63,6 +63,8 @@ public class AcudienteService implements IAcudienteService{
     @Override
     public Acudiente asignarEstudiante(Acudiente acudiente, Estudiante estudiante) {
         Estudiante estudianteNuevo = estudianteRepository.save(estudiante);
+        acudiente.getEstudiante().add(estudianteNuevo);
+        acudiente.setEstudiante(acudiente.getEstudiante());
         estudianteNuevo.setAcudiente(acudiente);
         return acudiente;
     }

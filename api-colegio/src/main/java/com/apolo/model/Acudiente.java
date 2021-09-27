@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(
         uniqueConstraints=
@@ -21,6 +22,10 @@ public class Acudiente extends Persona{
     @OneToOne(mappedBy = "acudiente")
     @JsonIgnoreProperties(value = {"acudiente"})
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "acudiente")
+    @JsonIgnoreProperties(value = {"acudiente"})
+    private List<Estudiante> estudiante;
 
 
     public Acudiente() {
@@ -44,5 +49,11 @@ public class Acudiente extends Persona{
         this.usuario = usuario;
     }
 
+    public List<Estudiante> getEstudiante() {
+        return estudiante;
+    }
 
+    public void setEstudiante(List<Estudiante> estudiante) {
+        this.estudiante = estudiante;
+    }
 }

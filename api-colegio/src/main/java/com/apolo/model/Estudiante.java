@@ -48,10 +48,12 @@ public class Estudiante extends Persona{
 
     private String grupo_sanguineo;
 
+    private boolean rh;
+
     @ManyToOne()
+    @JsonIgnoreProperties(value = {"usuario", "estudiante", "acudiente"})
     private Acudiente acudiente;
 
-    private boolean rh;
 
     public Estudiante() {
         super();

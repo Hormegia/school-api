@@ -3,6 +3,7 @@ package com.apolo.resource;
 import com.apolo.dao.FiltroAcudienteRequest;
 import com.apolo.model.Acudiente;
 import com.apolo.model.Estudiante;
+import com.apolo.model.Usuario;
 import com.apolo.service.IAcudienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +43,23 @@ public class AcudienteJPAResource {
     }
 
     @PostMapping("/acudientes/{id}/estudiantes")
-    public EntityModel<Acudiente> asignarEstudiante(@Valid @RequestBody Estudiante estudiante, @PathVariable int id ){
+    public List<Estudiante> asignarEstudiante(@Valid @RequestBody Estudiante estudiante, @PathVariable int id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();
 
         acudiente = acudienteService.asignarEstudiante(acudiente, estudiante);
 
 
-        return EntityModel.of(acudiente);
+        return acudiente.getEstudiante();
     }
 
 
+    //retorna todos los estudiantes de un usuario
+    @PostMapping("/acudientes/{id}/estudiantes")
+    public List<Estudiante> getEstudiantes(@PathVariable int id ){
+
+        Acudiente acudiente = acudienteService.findById(id).get();
+
+        return acudiente.getEstudiante();
+    }
 }
