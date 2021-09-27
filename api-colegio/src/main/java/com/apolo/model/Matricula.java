@@ -1,10 +1,10 @@
 package com.apolo.model;
 
 
+import com.apolo.modulos.usuarios.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 

@@ -1,8 +1,8 @@
 package com.apolo.spring.authentication.jwt;
 
-import com.apolo.model.Usuario;
-import com.apolo.repository.UserRepository;
-import com.apolo.resource.UsuarioJPAResource;
+import com.apolo.modulos.usuarios.model.Usuario;
+import com.apolo.modulos.usuarios.repository.UsuarioRepository;
+import com.apolo.modulos.usuarios.resource.UsuarioJPAResource;
 import com.apolo.spring.util.JwtUtil;
 import com.apolo.spring.dao.AuthenticationRequest;
 import com.apolo.spring.dao.AuthenticationResponse;
@@ -32,7 +32,7 @@ public class AuthenticationController {
     private JwtUtil jwTokenUtil;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @PostMapping("/autenticar")
     public ResponseEntity<?> crearTokenAutenticado(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -66,7 +66,7 @@ public class AuthenticationController {
     private ResponseEntity<?> getResponseEntity(UserDetails userDetails) {
         final String jwt = jwTokenUtil.generateToken(userDetails);
 
-        Optional<Usuario> usuario = userRepository.findUsuarioByCorreo(userDetails.getUsername());
+        Optional<Usuario> usuario = usuarioRepository.findUsuarioByCorreo(userDetails.getUsername());
 
         EntityModel<?> resource = EntityModel.of(new AuthenticationResponse(jwt));
 
