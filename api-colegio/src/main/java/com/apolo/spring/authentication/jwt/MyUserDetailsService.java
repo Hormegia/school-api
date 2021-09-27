@@ -1,9 +1,9 @@
 package com.apolo.spring.authentication.jwt;
 
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
-import com.apolo.model.RolUsuario;
-import com.apolo.model.Usuario;
-import com.apolo.repository.UserRepository;
+import com.apolo.modulos.roles.repository.RolUsuario;
+import com.apolo.modulos.usuarios.model.Usuario;
+import com.apolo.modulos.usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,11 +21,11 @@ import java.util.Optional;
 public class MyUserDetailsService implements UserDetailsService {
 
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public MyUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public MyUserDetailsService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
 
-        Optional<Usuario> usuario = userRepository.findUsuarioByCorreo(nombreUsuario);
+        Optional<Usuario> usuario = usuarioRepository.findUsuarioByCorreo(nombreUsuario);
 
         if (!usuario.isPresent()) {
             throw new ObjetoNoEncontradoException("Usuario no encontrado");
