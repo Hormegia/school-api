@@ -52,6 +52,29 @@ public class Estudiante extends Persona {
 
     private boolean rh;
 
+    private String direccion;
+
+    private String barrio;
+
+    private String localidad;
+
+    private String estrato;
+
+    private String nivelSisben;
+
+    private String puntajeSisben;
+
+    private String aficiones;
+
+    private String cirugias;
+
+    private String eps;
+
+    private String ars;
+
+    private String ips;
+
+
     @ManyToOne()
     @JsonIgnoreProperties(value = {"usuario", "estudiante", "acudiente"})
     private Acudiente acudiente;

@@ -1,6 +1,6 @@
-package com.apolo.repository;
+package com.apolo.modulos.grados.repository;
 
-import com.apolo.model.Grado;
+import com.apolo.modulos.grados.model.Grado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

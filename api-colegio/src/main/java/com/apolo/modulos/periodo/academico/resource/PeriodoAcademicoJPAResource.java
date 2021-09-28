@@ -29,7 +29,7 @@ public class PeriodoAcademicoJPAResource {
     public List<PeriodoAcademico> getAll() {
         return periodoAcademicoRepository.findAll();
     }
-    // cual es el error?
+
 
     //Trae un periodo por id
     // GET  /periodos/id

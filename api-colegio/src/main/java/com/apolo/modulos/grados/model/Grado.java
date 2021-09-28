@@ -1,4 +1,4 @@
-package com.apolo.model;
+package com.apolo.modulos.grados.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

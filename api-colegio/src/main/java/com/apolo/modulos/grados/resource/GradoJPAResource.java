@@ -1,7 +1,7 @@
-package com.apolo.resource;
+package com.apolo.modulos.grados.resource;
 
-import com.apolo.model.Grado;
-import com.apolo.repository.GradoRepository;
+import com.apolo.modulos.grados.model.Grado;
+import com.apolo.modulos.grados.repository.GradoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
