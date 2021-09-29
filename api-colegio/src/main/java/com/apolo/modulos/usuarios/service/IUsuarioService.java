@@ -16,7 +16,7 @@ public interface IUsuarioService {
 
     Usuario getUsuario(String token);
 
-    RolUsuario agregarRolUsuario(RolUsuario rolUsuario, int id);
+    RolUsuario agregarRolUsuario(RolUsuario rolUsuario, Long id);
 
-    void eliminarRolUsuario(RolUsuario rolUsuario, int id);
+    void eliminarRolUsuario(RolUsuario rolUsuario, Long id);
 }

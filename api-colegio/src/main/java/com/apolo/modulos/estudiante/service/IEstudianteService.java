@@ -11,10 +11,10 @@ public interface IEstudianteService {
 
     List<Estudiante> obtenerEstudiantesPorFiltro (FiltroEstudianteRequest filtroEstudianteRequest);
 
-    Optional<Estudiante> findById(Integer id);
+    Optional<Estudiante> findById(Long id);
 
     Optional<Estudiante> crearOEditarEstudiante (Estudiante estudiante);
 
-    void deleteById (Integer id);
+    void deleteById (Long id);
 }
 

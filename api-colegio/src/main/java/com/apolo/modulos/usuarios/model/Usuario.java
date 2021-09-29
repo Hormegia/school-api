@@ -2,7 +2,7 @@ package com.apolo.modulos.usuarios.model;
 
 import com.apolo.modulos.acudiente.model.Acudiente;
 import com.apolo.modulos.colaborador.model.Colaborador;
-import com.apolo.model.Matricula;
+import com.apolo.modulos.estudiante.model.Matricula;
 import com.apolo.modulos.roles.repository.RolUsuario;
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModel;
@@ -19,7 +19,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Size(min=2, message = "minimo 2")
     private String nombre;
@@ -38,9 +38,6 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY )
     private String password;
 
-    @OneToMany(mappedBy = "usuario")
-    @JsonIgnoreProperties("usuario")
-    private List<Matricula> matriculas;
 
     @OneToMany(mappedBy = "usuario")
     @JsonIgnoreProperties("usuario")
@@ -60,9 +57,6 @@ public class Usuario {
 
 
 
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
 
     public Usuario() {
         this.habilitado = false;
@@ -76,17 +70,13 @@ public class Usuario {
         this.habilitado = habilitado;
     }
 
-    public Usuario(Integer id, String nombre, String correo) {
+    public Usuario(Long id, String nombre, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
     }
 
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
-
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -131,7 +121,7 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -157,7 +147,6 @@ public class Usuario {
         sb.append("id=").append(id);
         sb.append(", nombre='").append(nombre).append('\'');
         sb.append(", correo='").append(correo).append('\'');
-        sb.append(", matriculas=").append(matriculas);
         sb.append('}');
         return sb.toString();
     }

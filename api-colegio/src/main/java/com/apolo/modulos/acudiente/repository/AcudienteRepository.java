@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AcudienteRepository extends JpaRepository<Acudiente, Integer>, JpaSpecificationExecutor<Acudiente> {
+public interface AcudienteRepository extends JpaRepository<Acudiente, Long>, JpaSpecificationExecutor<Acudiente> {
     
 }

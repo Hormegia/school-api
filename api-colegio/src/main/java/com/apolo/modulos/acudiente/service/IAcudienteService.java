@@ -13,5 +13,5 @@ public interface IAcudienteService {
 
     Acudiente asignarEstudiante (Acudiente acudiente, Estudiante estudiante);
 
-    Optional<Acudiente> findById(Integer id);
+    Optional<Acudiente> findById(Long id);
 }
