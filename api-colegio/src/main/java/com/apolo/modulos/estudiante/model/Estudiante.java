@@ -46,11 +46,13 @@ public class Estudiante extends Persona {
 
     private String departamento;
 
+    private String departamentoExpedicion;
+
     private String ciudadExpedicion;
 
-    private String grupo_sanguineo;
+    private String grupoSanguineo;
 
-    private Boolean rh;
+    private String rh;
 
     private String direccion;
 
@@ -133,18 +135,126 @@ public class Estudiante extends Persona {
     }
 
     public String getGrupo_sanguineo() {
-        return grupo_sanguineo;
+        return grupoSanguineo;
     }
 
     public void setGrupo_sanguineo(String grupo_sanguineo) {
-        this.grupo_sanguineo = grupo_sanguineo;
+        this.grupoSanguineo = grupo_sanguineo;
     }
 
-    public boolean isRh() {
+    public String isRh() {
         return rh;
     }
 
-    public void setRh(boolean rh) {
+    public void setRh(String rh) {
         this.rh = rh;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getEstrato() {
+        return estrato;
+    }
+
+    public void setEstrato(String estrato) {
+        this.estrato = estrato;
+    }
+
+    public String getNivelSisben() {
+        return nivelSisben;
+    }
+
+    public void setNivelSisben(String nivelSisben) {
+        this.nivelSisben = nivelSisben;
+    }
+
+    public String getPuntajeSisben() {
+        return puntajeSisben;
+    }
+
+    public void setPuntajeSisben(String puntajeSisben) {
+        this.puntajeSisben = puntajeSisben;
+    }
+
+    public String getAficiones() {
+        return aficiones;
+    }
+
+    public void setAficiones(String aficiones) {
+        this.aficiones = aficiones;
+    }
+
+    public String getCirugias() {
+        return cirugias;
+    }
+
+    public void setCirugias(String cirugias) {
+        this.cirugias = cirugias;
+    }
+
+    public String getEps() {
+        return eps;
+    }
+
+    public void setEps(String eps) {
+        this.eps = eps;
+    }
+
+    public String getArs() {
+        return ars;
+    }
+
+    public void setArs(String ars) {
+        this.ars = ars;
+    }
+
+    public String getIps() {
+        return ips;
+    }
+
+    public void setIps(String ips) {
+        this.ips = ips;
+    }
+
+    public String getDepartamentoExpedicion() {
+        return departamentoExpedicion;
+    }
+
+    public void setDepartamentoExpedicion(String departamentoExpedicion) {
+        this.departamentoExpedicion = departamentoExpedicion;
+    }
+
+    public String getGrupoSanguineo() {
+        return grupoSanguineo;
+    }
+
+    public void setGrupoSanguineo(String grupoSanguineo) {
+        this.grupoSanguineo = grupoSanguineo;
+    }
+
+    public String getRh() {
+        return rh;
     }
 }
