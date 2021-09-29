@@ -35,7 +35,7 @@ public class RolJPAResource {
     //obtener rol
     //roles/id
     @GetMapping("/roles/{id}")
-    public EntityModel<Rol> getRol(@PathVariable int id) {
+    public EntityModel<Rol> getRol(@PathVariable Long id) {
         Optional<Rol> rol = rolRepository.findById(id);
 
         if (!rol.isPresent())
@@ -47,7 +47,7 @@ public class RolJPAResource {
     //eliminar rol
     //roles/id
     @DeleteMapping("/roles/{id}")
-    public ResponseEntity<?> deleteRol(@PathVariable int id) {
+    public ResponseEntity<?> deleteRol(@PathVariable Long id) {
 
         EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
 
@@ -58,7 +58,7 @@ public class RolJPAResource {
 
     @PostMapping("/roles")
     public EntityModel<Rol> creaOEditarRol(@Valid @RequestBody Rol rol) {
-        Integer idRol = rol.getId();
+        Long idRol = rol.getId();
 
         if (idRol != null) {
             Optional<Rol> rolExistente = rolRepository.findById(idRol);

@@ -34,7 +34,7 @@ public class AcudienteJPAResource {
     }
 
     @GetMapping("/acudientes/{id}")
-    public EntityModel<Acudiente> getById(@PathVariable int id) {
+    public EntityModel<Acudiente> getById(@PathVariable Long id) {
 
         Optional<Acudiente> acudiente = acudienteService.findById(id);
 
@@ -42,7 +42,7 @@ public class AcudienteJPAResource {
     }
 
     @PostMapping("/acudientes/{id}/estudiantes")
-    public List<Estudiante> asignarEstudiante(@Valid @RequestBody Estudiante estudiante, @PathVariable int id ){
+    public List<Estudiante> asignarEstudiante(@Valid @RequestBody Estudiante estudiante, @PathVariable Long id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();
 
@@ -55,7 +55,7 @@ public class AcudienteJPAResource {
 
     //retorna todos los estudiantes de un usuario
     @GetMapping("/acudientes/{id}/estudiantes")
-    public List<Estudiante> getEstudiantes(@PathVariable int id ){
+    public List<Estudiante> getEstudiantes(@PathVariable Long id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();
 

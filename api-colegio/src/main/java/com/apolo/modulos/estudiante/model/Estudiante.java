@@ -37,7 +37,7 @@ public class Estudiante extends Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNacimiento;
@@ -50,7 +50,7 @@ public class Estudiante extends Persona {
 
     private String grupo_sanguineo;
 
-    private boolean rh;
+    private Boolean rh;
 
     private String direccion;
 
@@ -84,11 +84,11 @@ public class Estudiante extends Persona {
         super();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

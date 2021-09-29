@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GradoRepository extends JpaRepository<Grado, Integer> {
+public interface GradoRepository extends JpaRepository<Grado, Long> {
     public List<Grado> findAllByOrderByIdAsc();
 }

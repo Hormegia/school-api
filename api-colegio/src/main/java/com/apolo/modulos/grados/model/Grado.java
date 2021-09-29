@@ -11,18 +11,18 @@ public class Grado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private Long id;
 
     @Column(unique = true)
     private String nombre;
 
     public Grado(){};
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

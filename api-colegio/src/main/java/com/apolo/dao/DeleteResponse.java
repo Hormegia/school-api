@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class DeleteResponse implements Serializable {
     private String respuesta = "Eliminado Correctamente";
 
-    private int id;
+    private Long id;
 
-    public DeleteResponse( int id) {
+    public DeleteResponse(Long id) {
         this.id = id;
     }
 
@@ -19,11 +19,11 @@ public class DeleteResponse implements Serializable {
         this.respuesta = respuesta;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

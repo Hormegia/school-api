@@ -62,7 +62,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public RolUsuario agregarRolUsuario(RolUsuario rolUsuario, int id) {
+    public RolUsuario agregarRolUsuario(RolUsuario rolUsuario, Long id) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 
 
@@ -83,13 +83,13 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public void eliminarRolUsuario(RolUsuario rolUsuario, int id) {
+    public void eliminarRolUsuario(RolUsuario rolUsuario, Long id) {
         rolUsuarioRepository.deleteById(rolUsuario.getId());
     }
 
     @Override
     public Usuario actualizarUsuario(Usuario usuario) {
-        Integer idUsuario = usuario.getId();
+        Long idUsuario = usuario.getId();
 
         if(idUsuario == null)
             throw new ObjetoNoEncontradoException("Se debe enviar un Id");

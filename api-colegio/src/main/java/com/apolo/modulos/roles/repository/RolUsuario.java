@@ -19,7 +19,7 @@ public class RolUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToOne()
     @JsonIgnoreProperties(value = {"roles",  "rolesCreados"})
@@ -40,11 +40,11 @@ public class RolUsuario {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

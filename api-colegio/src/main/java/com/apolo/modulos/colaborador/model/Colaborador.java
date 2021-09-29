@@ -17,18 +17,18 @@ public class Colaborador extends Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     public Colaborador() {
         super();
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 }

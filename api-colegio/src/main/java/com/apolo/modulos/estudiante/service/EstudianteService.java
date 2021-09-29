@@ -1,6 +1,5 @@
 package com.apolo.modulos.estudiante.service;
 
-import com.apolo.modulos.estudiante.service.IEstudianteService;
 import com.apolo.modulos.estudiante.dao.FiltroEstudianteRequest;
 import com.apolo.modulos.estudiante.model.Estudiante;
 import com.apolo.modulos.estudiante.repository.EstudianteRepository;
@@ -48,7 +47,7 @@ public class EstudianteService implements IEstudianteService {
     }
 
     @Override
-    public Optional<Estudiante> findById(Integer id) {
+    public Optional<Estudiante> findById(Long id) {
 
         Optional<Estudiante> estudiante = estudianteRepository.findById(id);
         if (!estudiante.isPresent())
@@ -63,7 +62,7 @@ public class EstudianteService implements IEstudianteService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         estudianteRepository.deleteById(id);
     }
 }

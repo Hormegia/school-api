@@ -68,7 +68,7 @@ public class UsuarioJPAResource {
     //Trae un usuario por id
     // GET  /usuarios/id
     @GetMapping("/usuarios/{id}")
-    public EntityModel<Usuario> getById(@PathVariable int id) {
+    public EntityModel<Usuario> getById(@PathVariable Long id) {
 
         Optional<Usuario> ususario = usuarioRepository.findById(id);
         if (!ususario.isPresent())
@@ -90,7 +90,7 @@ public class UsuarioJPAResource {
     //eliminar usuario
     //usuarios/id
     @DeleteMapping("/usuarios/{id}")
-    public ResponseEntity<?> deleteUsuario(@PathVariable int id) {
+    public ResponseEntity<?> deleteUsuario(@PathVariable Long id) {
 
         EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
 
@@ -198,7 +198,7 @@ public class UsuarioJPAResource {
     }
 
     @PostMapping("/usuarios/{id}/roles")
-    public EntityModel<RolUsuario> crearRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+    public EntityModel<RolUsuario> crearRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable Long id) {
 
         RolUsuario nuevoRolUsuario = iUsuarioService.agregarRolUsuario(rolUsuario, id);
 
@@ -207,7 +207,7 @@ public class UsuarioJPAResource {
     }
 
     @DeleteMapping("/usuarios/{id}/roles")
-    public ResponseEntity<?> eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable int id) {
+    public ResponseEntity<?> eliminarRolUsuario(@Valid @RequestBody RolUsuario rolUsuario, @PathVariable Long id) {
 
         EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
 
