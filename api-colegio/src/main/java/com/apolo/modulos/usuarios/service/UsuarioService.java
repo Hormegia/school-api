@@ -3,6 +3,10 @@ package com.apolo.modulos.usuarios.service;
 
 import com.apolo.modulos.roles.repository.RolUsuario;
 import com.apolo.modulos.roles.repository.RolUsuarioRepository;
+import com.apolo.modulos.usuarios.dao.FiltroUsuarioRequest;
+import com.apolo.spring.database.GenericSpecification;
+import com.apolo.spring.database.SearchCriteria;
+import com.apolo.spring.database.SearchOperation;
 import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.apolo.modulos.usuarios.model.TokenActivacionUsuario;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -119,5 +124,22 @@ public class UsuarioService implements IUsuarioService {
     }
 
 
+    @Override
+    public List<Usuario> obtenerUsuariosPorFiltro(FiltroUsuarioRequest filtro) {
+
+        GenericSpecification<Usuario> genericSpecification = new GenericSpecification<>();
+
+        if(filtro != null) {
+            if (filtro.getEsColaborador())
+                genericSpecification.add(new SearchCriteria("colaborador", null,
+                        SearchOperation.IS_NOT_NULL));
+            else
+                genericSpecification.add(new SearchCriteria("acudiente", null,
+                        SearchOperation.IS_NOT_NULL));
+
+        }
+
+        return usuarioRepository.findAll(genericSpecification);
+    }
 
 }

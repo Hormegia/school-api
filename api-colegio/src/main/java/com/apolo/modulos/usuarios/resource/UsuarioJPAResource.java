@@ -5,6 +5,7 @@ package com.apolo.modulos.usuarios.resource;
 
 import com.apolo.dao.DeleteResponse;
 import com.apolo.dao.GenericResponse;
+import com.apolo.modulos.usuarios.dao.FiltroUsuarioRequest;
 import com.apolo.modulos.usuarios.dao.UsuarioAcudienteRequest;
 import com.apolo.modulos.usuarios.dao.UsuarioColaboradorRequest;
 import com.apolo.modulos.acudiente.model.Acudiente;
@@ -61,8 +62,8 @@ public class UsuarioJPAResource {
     //todos los usuarios
     // GET  /usuario/
     @GetMapping("/usuarios")
-    public List<Usuario> getAll() {
-        return usuarioRepository.findAll();
+    public List<Usuario> getAll(@RequestBody(required=false) FiltroUsuarioRequest filtro) {
+        return iUsuarioService.obtenerUsuariosPorFiltro(filtro);
     }
 
     //Trae un usuario por id
@@ -78,7 +79,7 @@ public class UsuarioJPAResource {
         EntityModel<Usuario> resource = EntityModel.of(ususario.get());
 
         WebMvcLinkBuilder linkTo =
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll(new FiltroUsuarioRequest()));
 
         resource.add(linkTo.withRel("obtener-todos"));
 
