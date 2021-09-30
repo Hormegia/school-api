@@ -60,6 +60,11 @@ public class GenericSpecification<T> implements Specification<T> {
                 predicates.add(builder.like(
                         builder.lower(root.get(criteria.getKey())),
                         criteria.getValue().toString().toLowerCase() + "%"));
+            } else if (criteria.getOperation().equals(SearchOperation.IS_NOT_NULL)){
+                
+                predicates.add(builder.isNotNull(root.get(criteria.getKey())));
+
+
             }
         }
 

@@ -14,4 +14,5 @@ public enum SearchOperation {
     EQUAL,
     MATCH,
     MATCH_END,
+    IS_NOT_NULL
 }
