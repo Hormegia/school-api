@@ -67,8 +67,7 @@ public class MatriculaService implements IMatriculaService{
         madre.setMatricula(matricula);
 
         acudiente.setMatricula(matricula);
-
-        System.err.println("WWWWWWWWW");
+        
         datosResponsableRepository.save(padre);
         datosResponsableRepository.save(madre);
         datosResponsableRepository.save(acudiente);
