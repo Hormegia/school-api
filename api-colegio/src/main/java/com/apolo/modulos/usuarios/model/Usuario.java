@@ -2,8 +2,7 @@ package com.apolo.modulos.usuarios.model;
 
 import com.apolo.modulos.acudiente.model.Acudiente;
 import com.apolo.modulos.colaborador.model.Colaborador;
-import com.apolo.modulos.estudiante.model.Matricula;
-import com.apolo.modulos.roles.repository.RolUsuario;
+import com.apolo.modulos.roles.model.RolUsuario;
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModel;
 
@@ -44,15 +43,17 @@ public class Usuario {
     private List<RolUsuario> roles;
 
     @OneToMany(mappedBy = "usuarioCreacion")
-    @JsonIgnoreProperties("usuarioCreacion")
+    @JsonIgnoreProperties(value = {"usuarioCreacion", "acudiente", "colaborador"})
     @JsonProperty(access = JsonProperty.Access.READ_ONLY )
     private List<RolUsuario> rolesCreados;
 
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"usuario"})
     private Acudiente acudiente;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"usuario"})
     private Colaborador colaborador;
 
 

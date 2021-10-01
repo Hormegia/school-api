@@ -1,6 +1,5 @@
-package com.apolo.modulos.roles.repository;
+package com.apolo.modulos.roles.model;
 
-import com.apolo.modulos.roles.model.Rol;
 import com.apolo.modulos.usuarios.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -28,13 +27,13 @@ public class RolUsuario {
     @ManyToOne()
     private Rol rol;
 
-    @ManyToOne()
-    @JsonIgnoreProperties(value = {"roles", "rolesCreados"})
-    private Usuario usuarioCreacion;
-
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
+
+    @ManyToOne()
+    @JsonIgnoreProperties(value = {"roles", "rolesCreados", "acudiente", "colaborador"})
+    private Usuario usuarioCreacion;
+
 
     public RolUsuario(){
 

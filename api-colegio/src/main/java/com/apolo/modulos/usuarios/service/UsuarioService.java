@@ -1,9 +1,8 @@
 package com.apolo.modulos.usuarios.service;
 
 
-import com.apolo.modulos.roles.repository.RolUsuario;
+import com.apolo.modulos.roles.model.RolUsuario;
 import com.apolo.modulos.roles.repository.RolUsuarioRepository;
-import com.apolo.modulos.usuarios.dao.FiltroUsuarioRequest;
 import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
 import com.apolo.spring.database.SearchOperation;
