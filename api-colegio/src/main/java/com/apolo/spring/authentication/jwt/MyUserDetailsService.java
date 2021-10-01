@@ -1,7 +1,7 @@
 package com.apolo.spring.authentication.jwt;
 
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
-import com.apolo.modulos.roles.repository.RolUsuario;
+import com.apolo.modulos.roles.model.RolUsuario;
 import com.apolo.modulos.usuarios.model.Usuario;
 import com.apolo.modulos.usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

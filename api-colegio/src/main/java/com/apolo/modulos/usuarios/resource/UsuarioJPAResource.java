@@ -5,12 +5,11 @@ package com.apolo.modulos.usuarios.resource;
 
 import com.apolo.dao.DeleteResponse;
 import com.apolo.dao.GenericResponse;
-import com.apolo.modulos.usuarios.dao.FiltroUsuarioRequest;
 import com.apolo.modulos.usuarios.dao.UsuarioAcudienteRequest;
 import com.apolo.modulos.usuarios.dao.UsuarioColaboradorRequest;
 import com.apolo.modulos.acudiente.model.Acudiente;
 import com.apolo.modulos.colaborador.model.Colaborador;
-import com.apolo.modulos.roles.repository.RolUsuario;
+import com.apolo.modulos.roles.model.RolUsuario;
 import com.apolo.modulos.usuarios.model.TokenActivacionUsuario;
 import com.apolo.modulos.usuarios.model.Usuario;
 import com.apolo.modulos.acudiente.repository.AcudienteRepository;
@@ -32,7 +31,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
