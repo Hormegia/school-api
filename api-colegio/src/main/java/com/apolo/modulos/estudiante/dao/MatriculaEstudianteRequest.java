@@ -26,10 +26,8 @@ public class MatriculaEstudianteRequest implements Serializable {
     private InformacionAdicional informacionAdicional;
 
 
-    private InformacionEducativa informacionEducativa;
+    private InformacionEducativa [] informacionEducativa;
 
-    @NotNull
-    private Grado grado;
 
     @NotNull
     private Matricula matricula;
@@ -69,20 +67,12 @@ public class MatriculaEstudianteRequest implements Serializable {
         this.informacionAdicional = informacionAdicional;
     }
 
-    public InformacionEducativa getInformacionEducativa() {
+    public InformacionEducativa[] getInformacionEducativa() {
         return informacionEducativa;
     }
 
-    public void setInformacionEducativa(InformacionEducativa informacionEducativa) {
+    public void setInformacionEducativa(InformacionEducativa[] informacionEducativa) {
         this.informacionEducativa = informacionEducativa;
-    }
-
-    public Grado getGrado() {
-        return grado;
-    }
-
-    public void setGrado(Grado grado) {
-        this.grado = grado;
     }
 
     public Matricula getMatricula() {

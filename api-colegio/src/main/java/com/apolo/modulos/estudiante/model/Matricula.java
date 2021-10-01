@@ -19,18 +19,18 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("matriculas")
     private Estudiante estudiante;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Grado grado;
 
     private Boolean estado;
 
     private Boolean jornada;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private PeriodoAcademico periodoAcademico;
 
     public Matricula() {

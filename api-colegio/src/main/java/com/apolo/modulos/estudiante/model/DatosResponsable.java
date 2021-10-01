@@ -28,7 +28,8 @@ public class DatosResponsable extends Persona {
 
     private Boolean  esAcudiente;
 
-    @OneToOne()
+
+    @OneToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties()
     private Matricula matricula;
 

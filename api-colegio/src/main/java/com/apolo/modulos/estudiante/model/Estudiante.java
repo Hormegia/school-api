@@ -77,7 +77,7 @@ public class Estudiante extends Persona {
     private String ips;
 
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties(value = {"usuario", "estudiante", "acudiente"})
     private Acudiente acudiente;
 
