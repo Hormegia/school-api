@@ -5,15 +5,26 @@ import com.apolo.modulos.usuarios.event.onRegistroUsuarioEvent;
 import com.apolo.modulos.usuarios.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 
 import java.util.UUID;
 
 @Component
 public class RegistrarListener implements ApplicationListener<onRegistroUsuarioEvent> {
-
 
 
     private JavaMailSender mailSender;
@@ -27,28 +38,52 @@ public class RegistrarListener implements ApplicationListener<onRegistroUsuarioE
     }
 
 
-
     @Override
     public void onApplicationEvent(onRegistroUsuarioEvent onRegistroUsuarioEvent) {
-        this.confirmRegistration(onRegistroUsuarioEvent);
+        try {
+            this.confirmRegistration(onRegistroUsuarioEvent);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void confirmRegistration(onRegistroUsuarioEvent event) {
+    private void confirmRegistration(onRegistroUsuarioEvent event) throws MessagingException {
+
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setSuffix(".html");
+        templateResolver.setPrefix("templates/");
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+
+        //IWebContext context = new WebContext( request,  response,  request.getServletContext());
+
+
+
         Usuario usuario = event.getUsuario();
         String token = UUID.randomUUID().toString();
         iUsuarioService.crearTokenActivacion(usuario, token);
 
         String recipientAddress = usuario.getCorreo();
         String subject = "Confirmación Contraseña";
-        String confirmationUrl = event.getAppUrl() + "/" +token;
+        String confirmationUrl = event.getAppUrl() + "/" + token;
 
-        String message = "EXSITOSOOOO";
+        Context context = new Context();
+        context.setVariable("urlActivar", confirmationUrl);
+        String html = templateEngine.process("activacionUsuario", context);
 
-        SimpleMailMessage email = new SimpleMailMessage();
+
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+        MimeMessageHelper email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(  message + "\r\n"  + confirmationUrl);
-        mailSender.send(email);
+        mimeMessage.setContent(html, "text/html");
+        mailSender.send(mimeMessage);
     }
 
 }
