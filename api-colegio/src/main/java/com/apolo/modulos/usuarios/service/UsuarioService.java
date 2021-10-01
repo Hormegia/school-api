@@ -125,19 +125,18 @@ public class UsuarioService implements IUsuarioService {
 
 
     @Override
-    public List<Usuario> obtenerUsuariosPorFiltro(FiltroUsuarioRequest filtro) {
+    public List<Usuario> obtenerUsuariosPorFiltro(Boolean esColaborador ) {
 
         GenericSpecification<Usuario> genericSpecification = new GenericSpecification<>();
 
-        if(filtro != null) {
-            if (filtro.getEsColaborador())
-                genericSpecification.add(new SearchCriteria("colaborador", null,
-                        SearchOperation.IS_NOT_NULL));
-            else
-                genericSpecification.add(new SearchCriteria("acudiente", null,
-                        SearchOperation.IS_NOT_NULL));
+        if(esColaborador)
+            genericSpecification.add(new SearchCriteria("colaborador", null,
+                    SearchOperation.IS_NOT_NULL));
+        else
+            genericSpecification.add(new SearchCriteria("acudiente", null,
+                    SearchOperation.IS_NOT_NULL));
 
-        }
+
 
         return usuarioRepository.findAll(genericSpecification);
     }

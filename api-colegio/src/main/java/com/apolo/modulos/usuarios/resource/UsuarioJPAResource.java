@@ -32,6 +32,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -62,8 +63,8 @@ public class UsuarioJPAResource {
     //todos los usuarios
     // GET  /usuario/
     @GetMapping("/usuarios")
-    public List<Usuario> getAll(@RequestBody(required=false) FiltroUsuarioRequest filtro) {
-        return iUsuarioService.obtenerUsuariosPorFiltro(filtro);
+    public List<Usuario> getAll(@RequestParam(required = false) Boolean esColaborador) {
+        return iUsuarioService.obtenerUsuariosPorFiltro(esColaborador);
     }
 
     //Trae un usuario por id
@@ -79,7 +80,7 @@ public class UsuarioJPAResource {
         EntityModel<Usuario> resource = EntityModel.of(ususario.get());
 
         WebMvcLinkBuilder linkTo =
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll(new FiltroUsuarioRequest()));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll(null));
 
         resource.add(linkTo.withRel("obtener-todos"));
 
