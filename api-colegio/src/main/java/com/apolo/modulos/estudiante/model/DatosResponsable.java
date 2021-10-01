@@ -14,6 +14,8 @@ public class DatosResponsable extends Persona {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String nombreCompleto;
+
     private String numeroFijo;
 
     private String direccion;
@@ -39,6 +41,14 @@ public class DatosResponsable extends Persona {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getNumeroFijo() {
@@ -95,5 +105,21 @@ public class DatosResponsable extends Persona {
 
     public void setMatricula(Matricula matricula) {
         this.matricula = matricula;
+    }
+
+    public Boolean getEsPadre() {
+        return esPadre;
+    }
+
+    public void setEsPadre(Boolean esPadre) {
+        this.esPadre = esPadre;
+    }
+
+    public Boolean getEsAcudiente() {
+        return esAcudiente;
+    }
+
+    public void setEsAcudiente(Boolean esAcudiente) {
+        this.esAcudiente = esAcudiente;
     }
 }
