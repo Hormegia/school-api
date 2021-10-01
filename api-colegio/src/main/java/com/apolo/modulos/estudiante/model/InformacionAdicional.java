@@ -29,7 +29,7 @@ public class InformacionAdicional {
 
     private String ExamenVal;
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.ALL})
     private Matricula matricula;
 
     public InformacionAdicional() {

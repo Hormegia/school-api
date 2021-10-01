@@ -27,7 +27,7 @@ public class InformacionEducativa {
     @ManyToOne()
     private Grado grado;
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties()
     private Matricula matricula;
     public InformacionEducativa() {

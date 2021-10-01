@@ -28,18 +28,22 @@ public class PeriodoAcademico {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
 
-    //@NotNull
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;
 
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicioInscripcion1;
 
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinInscripcion1;
 
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicioInscripcion2;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinInscripcion2;

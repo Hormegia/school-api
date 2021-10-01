@@ -1,15 +1,13 @@
 package com.apolo.modulos.estudiante.service;
 
 import com.apolo.modulos.estudiante.dao.MatriculaEstudianteRequest;
-import com.apolo.modulos.estudiante.model.DatosResponsable;
-import com.apolo.modulos.estudiante.model.InformacionAdicional;
-import com.apolo.modulos.estudiante.model.InformacionEducativa;
-import com.apolo.modulos.estudiante.model.Matricula;
+import com.apolo.modulos.estudiante.model.*;
 import com.apolo.modulos.estudiante.repository.DatosResponsableRepository;
 import com.apolo.modulos.estudiante.repository.InformacionAdicionalRepository;
 import com.apolo.modulos.estudiante.repository.InformacionEducativaRepository;
 import com.apolo.modulos.estudiante.repository.MatriculaRepository;
 import com.apolo.modulos.grados.model.Grado;
+import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,7 +36,13 @@ public class MatriculaService implements IMatriculaService{
     @Override
     public Matricula crearMatriculaEstudiante(MatriculaEstudianteRequest matriculaEstudianteRequest) {
 
-        Grado grado = matriculaEstudianteRequest.getGrado();
+        Matricula matricula = matriculaEstudianteRequest.getMatricula();
+
+        Grado grado = matricula.getGrado();
+
+        PeriodoAcademico periodoAcademico = matricula.getPeriodoAcademico();
+
+        Estudiante estudiante = matricula.getEstudiante();
 
         DatosResponsable padre = matriculaEstudianteRequest.getDatosPadre();
 
@@ -48,7 +52,7 @@ public class MatriculaService implements IMatriculaService{
 
         InformacionAdicional informacionAdicional = matriculaEstudianteRequest.getInformacionAdicional();
 
-        InformacionEducativa informacionEducativa = matriculaEstudianteRequest.getInformacionEducativa();
+        InformacionEducativa [] informacionEducativa = matriculaEstudianteRequest.getInformacionEducativa();
 
         madre.setEsPadre(false);
 
@@ -56,27 +60,32 @@ public class MatriculaService implements IMatriculaService{
 
         acudiente.setEsAcudiente(true);
 
-        Matricula matricula = matriculaEstudianteRequest.getMatricula();
+        Matricula matricula1 = matriculaRepository.save(matricula);
 
-        informacionAdicional.setMatricula(matricula);
+        informacionAdicional.setMatricula(matricula1);
 
-        informacionEducativa.setMatricula(matricula);
 
-        padre.setMatricula(matricula);
+        padre.setMatricula(matricula1);
 
-        madre.setMatricula(matricula);
+        madre.setMatricula(matricula1);
 
-        acudiente.setMatricula(matricula);
-        
+        acudiente.setMatricula(matricula1);
+
+
+
         datosResponsableRepository.save(padre);
         datosResponsableRepository.save(madre);
         datosResponsableRepository.save(acudiente);
 
         informacionAdicionalRepository.save(informacionAdicional);
 
-        informacionEducativaRepository.save(informacionEducativa);
+        for (InformacionEducativa ie: informacionEducativa) {
+            ie.setMatricula(matricula);
+            informacionEducativaRepository.save(ie);
+        }
 
 
-        return matriculaRepository.save(matricula);
+
+        return matricula1;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,8 @@ public class PeriodoAcademicoJPAResource {
             Optional<PeriodoAcademico> periodoExistente = periodoAcademicoRepository.findById(idPeriodo);
             if (!periodoExistente.isPresent())
                 throw new ObjetoNoEncontradoException("No se encontro el periodo con el id: " + idPeriodo);
+        }else{
+            periodoAcademico.setFechaCreacionPeriodo(new Date());
         }
 
         PeriodoAcademico nuevoPeriodoAcademico = periodoAcademicoRepository.save(periodoAcademico);
