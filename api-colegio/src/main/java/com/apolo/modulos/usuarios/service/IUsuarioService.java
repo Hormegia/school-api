@@ -23,5 +23,5 @@ public interface IUsuarioService {
 
     void eliminarRolUsuario(RolUsuario rolUsuario, Long id);
 
-    List<Usuario> obtenerUsuariosPorFiltro(FiltroUsuarioRequest filtroUsuarioRequest);
+    List<Usuario> obtenerUsuariosPorFiltro(Boolean esColaborador);
 }
