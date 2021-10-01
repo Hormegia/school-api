@@ -2,12 +2,11 @@ package com.apolo.modulos.estudiante.service;
 
 import com.apolo.modulos.estudiante.dao.MatriculaEstudianteRequest;
 import com.apolo.modulos.estudiante.model.*;
-import com.apolo.modulos.estudiante.repository.DatosResponsableRepository;
-import com.apolo.modulos.estudiante.repository.InformacionAdicionalRepository;
-import com.apolo.modulos.estudiante.repository.InformacionEducativaRepository;
-import com.apolo.modulos.estudiante.repository.MatriculaRepository;
+import com.apolo.modulos.estudiante.repository.*;
 import com.apolo.modulos.grados.model.Grado;
+import com.apolo.modulos.grados.repository.GradoRepository;
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
+import com.apolo.modulos.periodo.academico.repository.PeriodoAcademicoRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,11 +24,20 @@ public class MatriculaService implements IMatriculaService{
 
     private final MatriculaRepository matriculaRepository;
 
-    public MatriculaService(DatosResponsableRepository datosResponsableRepository, InformacionAdicionalRepository informacionAdicionalRepository, InformacionEducativaRepository informacionEducativaRepository, MatriculaRepository matriculaRepository) {
+    private final GradoRepository gradoRepository;
+
+    private final EstudianteRepository estudianteRepository;
+
+    private final PeriodoAcademicoRepository periodoAcademicoRepository;
+
+    public MatriculaService(DatosResponsableRepository datosResponsableRepository, InformacionAdicionalRepository informacionAdicionalRepository, InformacionEducativaRepository informacionEducativaRepository, MatriculaRepository matriculaRepository, GradoRepository gradoRepository, EstudianteRepository estudianteRepository, PeriodoAcademicoRepository periodoAcademicoRepository) {
         this.datosResponsableRepository = datosResponsableRepository;
         this.informacionAdicionalRepository = informacionAdicionalRepository;
         this.informacionEducativaRepository = informacionEducativaRepository;
         this.matriculaRepository = matriculaRepository;
+        this.gradoRepository = gradoRepository;
+        this.estudianteRepository = estudianteRepository;
+        this.periodoAcademicoRepository = periodoAcademicoRepository;
     }
 
 
@@ -38,11 +46,11 @@ public class MatriculaService implements IMatriculaService{
 
         Matricula matricula = matriculaEstudianteRequest.getMatricula();
 
-        Grado grado = matricula.getGrado();
+        Grado grado = gradoRepository.findById(matricula.getGrado().getId()).get();
 
-        PeriodoAcademico periodoAcademico = matricula.getPeriodoAcademico();
+        PeriodoAcademico periodoAcademico = periodoAcademicoRepository.findById(matricula.getPeriodoAcademico().getId()).get();
 
-        Estudiante estudiante = matricula.getEstudiante();
+        Estudiante estudiante = estudianteRepository.findById(matricula.getEstudiante().getId()).get();
 
         DatosResponsable padre = matriculaEstudianteRequest.getDatosPadre();
 
@@ -59,6 +67,9 @@ public class MatriculaService implements IMatriculaService{
         padre.setEsPadre(true);
 
         acudiente.setEsAcudiente(true);
+
+        matricula.setEstudiante(estudiante);
+        matricula.setGrado(grado);
 
         Matricula matricula1 = matriculaRepository.save(matricula);
 

@@ -4,7 +4,7 @@ public enum Credencial {
     ADMIN("ADMIN"),
     COORDINADOR("COORDINADOR"),
     ACUDIENTE("ACUDIENTE"),
-    ADMINISTRADOR("ADMINISTRADOR");
+    COLABORADOR("COLABORADOR");
 
     private final String codigo;
 
