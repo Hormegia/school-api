@@ -1,6 +1,7 @@
 package com.apolo.modulos.roles.resource;
 
 import com.apolo.dao.DeleteResponse;
+import com.apolo.modulos.roles.enums.Credencial;
 import com.apolo.modulos.roles.model.Rol;
 import com.apolo.modulos.roles.repository.RolRepository;
 import com.apolo.spring.exception.ErrorGeneralExcepcion;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,12 @@ public class RolJPAResource {
     @GetMapping("/roles")
     public List<Rol> retrieveAllRoles() {
         return rolRepository.findAll();
+    }
+
+    //todas las credenciales
+    @GetMapping("/roles/credenciales")
+    public List<Credencial> getCreddenciales() {
+        return  Arrays.asList(Credencial.values());
     }
 
     //obtener rol
@@ -66,7 +74,7 @@ public class RolJPAResource {
                 throw new ObjetoNoEncontradoException("No existe un rol con el id " + idRol);
         }else{
 
-            String credencial = rol.getCredencial();
+            Credencial credencial = rol.getCredencial();
 
             Optional<Rol>  rolExistente  = rolRepository.findByCredencial(credencial);
 

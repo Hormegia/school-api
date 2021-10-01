@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+    <style>
+        .main-content {
+            margin: 0 2.0rem;
+            padding: 0 2.0rem;
+        }
+
+        .content {
+            margin-bottom: 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            text-align: center;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .header-photo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0.3rem solid black;
+            width: 125px;
+        }
+
+        .course-content {
+            display: flex;
+        }
+
+        .student-content {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .signature-content {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8rem;
+        }
+
+        table {
+            flex: 1;
+            text-align: center;
+            border: 0.15rem solid black;
+            border-collapse: collapse;
+            margin-bottom: 0.8rem;
+        }
+
+        th,
+        td {
+            border: 0.15rem solid black;
+        }
+
+        .simple-border {
+            border: 0.2rem solid black;
+        }
+
+        .terms {
+            text-transform: none;
+        }
+
+        .signature {
+            border-top: 0.2rem solid black;
+            width: 330px;
+        }
+
+        .lined-border {
+            height: 0.1rem;
+            border: 0.1rem dashed black;
+            margin-bottom: 1rem;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .empty {
+            width: 40px;
+        }
+
+        .signature-content-2 {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8rem;
+        }
+
+        .signature-2 {
+            flex: auto;
+            border-bottom: 0.2rem solid black;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enrollment form</title>
+
+</head>
+
+<body>
+<main class="main-content">
+
+    <!--Header container-->
+    <section class="header-content content">
+
+        <div class="header-title">
+            <h1>COLEGIO ITD JUAN DEL CORRAL IED</h1>
+            <h1>MATRICULA AÑO 2019</h1>
+        </div>
+        <div class="header-photo">
+            <h1>FOTO</h1>
+        </div>
+    </section>
+    <!--Header container-->
+
+    <!--Curso container-->
+    <section class="course-content content">
+        <table >
+            <thead>
+            <tr>
+                <th>Dane</th>
+                <th>Curso</th>
+                <th>Jornada</th>
+                <th>Estado</th>
+                <th>Edad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>111001009583</td>
+                <td>TRANSICIÓN</td>
+                <td>MAÑANA</td>
+                <td>ANTIGUO</td>
+                <td>15</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Curso container-->
+
+    <!--Student container-->
+    <section class="student-content content">
+        <h3>Datos del estudiante</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Primer apellido</th>
+                <th>Segundo apellido</th>
+                <th>Primer nombre</th>
+                <th>Segundo nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MONTEALEGRE</td>
+                <td>MONTEALEGRE</td>
+                <td>CRISTOPHER</td>
+                <td>ALEJANDRO</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Fecha de nac.</th>
+                <th>Ciudad</th>
+                <th>Departamento</th>
+                <th>Tipo de doc</th>
+                <th>Número</th>
+                <th>Expedido en</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2003-05-19</td>
+                <td>MEDELLIN</td>
+                <td>NARIÑO</td>
+                <td>CÉDULA</td>
+                <td>12345678985</td>
+                <td>BOGOTA</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Dirección</th>
+                <th>Barrio</th>
+                <th>Localidad</th>
+                <th>Estrato</th>
+                <th>Nivel sisben</th>
+                <th>Puntaje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
+                <td>LAS FERIAS </td>
+                <td>ENGATIVA</td>
+                <td>4</td>
+                <td>4</td>
+                <td>52.08</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Teléfono</th>
+                <th>Aficiones o hobbies</th>
+                <th>Cirugías fracturas o enfermedades</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>3102148046</td>
+                <td>NINGUNO </td>
+                <td>NINGUNA</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>EPS</th>
+                <th>ARS</th>
+                <th>IPS</th>
+                <th>G. SANGUÍNEO</th>
+                <th>RH</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>COLSANITAS</td>
+                <td>COLSANITAS</td>
+                <td>SUCURSAL LAS FERIAS </td>
+                <td>AB</td>
+                <td>-</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Student container-->
+
+    <!--Mother container-->
+    <section class="student-content content">
+        <h3>Datos de la madre</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Teléfono fijo</th>
+                <th>Celular</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MARIA RUIZ PINTO</td>
+                <td>980675432123</td>
+                <td>3006418</td>
+                <td>3105033589</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Dirección</th>
+                <th>Ocupación</th>
+                <th>Correo electrónico</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
+                <td>SEÑORA DE LA CA </td>
+                <td>mariaruizp@micorreo.com.co</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Mother container-->
+
+    <!--Father container-->
+    <section class="student-content content">
+        <h3>Datos del padre</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Teléfono fijo</th>
+                <th>Celular</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>PEPITO PEREZ</td>
+                <td>123456777890</td>
+                <td>3006418</td>
+                <td>3005602018</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Dirección</th>
+                <th>Ocupación</th>
+                <th>Correo electrónico</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
+                <td>Empleado</td>
+                <td>mariaruizp@micorreo.com.co</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Father container-->
+
+    <!--Sponsor container-->
+    <section class="student-content content">
+        <h3>Datos del acudiente</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Teléfono fijo</th>
+                <th>Celular</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MARIA RUIZ PINTO</td>
+                <td>980675432123</td>
+                <td>3006418</td>
+                <td>3105033589</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Dirección</th>
+                <th>Ocupación</th>
+                <th>Correo electrónico</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
+                <td>SEÑORA DE LA CA </td>
+                <td>mariaruizp@micorreo.com.co</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Sponsor container-->
+
+    <!--additional information container-->
+    <section class="student-content content">
+        <h3>Información educativa</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Grado</th>
+                <th>Año</th>
+                <th>Ciudad</th>
+                <th>Institución</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Transición</td>
+                <td>2008</td>
+                <td>Bogotá</td>
+                <td>Colegio nueva constitución</td>
+            </tr>
+            <tr>
+                <td>Primero</td>
+                <td>2009</td>
+                <td>Bogotá</td>
+                <td>Colegio guatemala</td>
+            </tr>
+            <tr>
+                <td>Segundo</td>
+                <td>2010</td>
+                <td>Bogotá</td>
+                <td>Colegio bolivia</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--additional information container-->
+
+    <!--terms container-->
+    <section class="student-content content terms">
+        <div class="simple-border">
+            <p>Al firmar la presente matrícula aceptamos el PEI del colegio, nos comprometemos a acatar las normas
+                estipuladas en el manual de convivencia, cumplir los
+                principios juancorralinos, respetar la filosofía del colegio y asumir las reponsabilidades
+                constitucionales de la familia en la educación de los hijos.</p>
+        </div>
+    </section>
+    <!--terms container-->
+
+    <!--signature container-->
+    <section class="signature-content content">
+        <div class="signature">Firma del alumno</div>
+        <div class="signature">Forma del padre, madre o acudiente</div>
+    </section>
+    <section class="signature-content content">
+        <div class="signature">Firma del rector</div>
+        <div class="signature">Forma de la secretaria</div>
+    </section>
+    <!--signature container-->
+
+    <!--date container-->
+    <section class="date-content content">
+        <p>Fecha: 17/09/2018</p>
+        <p>Hora: 20:54:13</p>
+    </section>
+    <!--date container-->
+
+    <section class="lined-border"></section>
+
+
+    <!--Consent container-->
+    <section class="student-content content">
+        <h3>Constancia entrega documento matrícula ITD Juan Del Corral IED</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Ident.</th>
+                <th>Año</th>
+                <th>Curso</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MONTEALEGRE MONTEALEGRE CRISTOPHER ALEJANDRO</td>
+                <td>123456777890</td>
+                <td>2019</td>
+                <td>Transición</td>
+                <td>17/09/2018</td>
+                <td>20:54:13</td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+            <tr>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+                <td class="empty"></td>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td class="text-left">Doc. Padres o acudiente</td>
+                <td>Si</td>
+                <td>No</td>
+                <td class="empty"></td>
+                <td class="text-left">Carnet de vacunas</td>
+                <td>Si</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+                <td class="empty"></td>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+                <td class="empty"></td>
+                <td class="text-left">Registro civil</td>
+                <td>Si</td>
+                <td>No</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Consent container-->
+
+    <section class="signature-content-2 content">
+        <div>Nombre del funcionario:</div>
+        <div class="signature-2"></div>
+        <div>Firma:</div>
+        <div class="signature-2"></div>
+    </section>
+
+</main>
+</body>
+
+</html>

@@ -62,11 +62,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable();
         http.csrf().disable()
                 .authorizeRequests().antMatchers(WHITOUT_AUTH).permitAll()
-                .anyRequest().authenticated().and().cors()
+                //.anyRequest().authenticated().and().cors()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
+       // http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 

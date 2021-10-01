@@ -1,5 +1,6 @@
 package com.apolo.modulos.roles.model;
 
+import com.apolo.modulos.roles.enums.Credencial;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
@@ -20,13 +21,13 @@ public class Rol {
 
     @Column(unique = true)
     @NotNull
-    private String credencial;
+    private Credencial credencial;
 
     public Rol(){
 
     }
 
-    public Rol(Long id, String nombre, String credencial) {
+    public Rol(Long id, String nombre, Credencial credencial) {
         this.id = id;
         this.nombre = nombre;
         this.credencial = credencial;
@@ -48,11 +49,11 @@ public class Rol {
         this.nombre = nombre;
     }
 
-    public String getCredencial() {
+    public Credencial getCredencial() {
         return credencial;
     }
 
-    public void setCredencial(String credencial) {
+    public void setCredencial(Credencial credencial) {
         this.credencial = credencial;
     }
 
