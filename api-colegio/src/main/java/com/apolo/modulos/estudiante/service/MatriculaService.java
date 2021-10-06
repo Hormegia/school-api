@@ -63,8 +63,10 @@ public class MatriculaService implements IMatriculaService{
         InformacionEducativa [] informacionEducativa = matriculaEstudianteRequest.getInformacionEducativa();
 
         madre.setEsPadre(false);
+        madre.setEsAcudiente(false);
 
         padre.setEsPadre(true);
+        padre.setEsAcudiente(false);
 
         acudiente.setEsAcudiente(true);
 

@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @ApiModel(description = "información educativa de años pasados")
@@ -16,9 +15,8 @@ public class InformacionEducativa {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
+    @Column(length = 4)
+    private String fecha;
 
     private String ciudad;
 
@@ -41,11 +39,11 @@ public class InformacionEducativa {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

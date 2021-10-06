@@ -1,6 +1,5 @@
 package com.apolo.modulos.estudiante.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ public class InformacionAdicional {
 
     private Boolean victimaCA;
 
-    private Boolean sDesplazamineto;
+    private Boolean sDesplazamiento;
 
     private Boolean desvinculadosGArmados;
 
@@ -27,7 +26,7 @@ public class InformacionAdicional {
 
     private String puntajeCI;
 
-    private String ExamenVal;
+    private String examenVal;
 
     @OneToOne(cascade = {CascadeType.ALL})
     private Matricula matricula;
@@ -51,12 +50,12 @@ public class InformacionAdicional {
         this.victimaCA = victimaCA;
     }
 
-    public Boolean getsDesplazamineto() {
-        return sDesplazamineto;
+    public Boolean getsDesplazamiento() {
+        return sDesplazamiento;
     }
 
-    public void setsDesplazamineto(Boolean sDesplazamineto) {
-        this.sDesplazamineto = sDesplazamineto;
+    public void setsDesplazamiento(Boolean sDesplazamineto) {
+        this.sDesplazamiento = sDesplazamineto;
     }
 
     public Boolean getDesvinculadosGArmados() {
@@ -100,11 +99,11 @@ public class InformacionAdicional {
     }
 
     public String getExamenVal() {
-        return ExamenVal;
+        return examenVal;
     }
 
     public void setExamenVal(String examenVal) {
-        ExamenVal = examenVal;
+        this.examenVal = examenVal;
     }
 
     public Matricula getMatricula() {
