@@ -1,15 +1,18 @@
 spring:
   profiles:
     active: dev
-  security:
-    user:
-      name: username
-      password: password
 
   datasource:
     username: root
     password: ''
     url: jdbc:mysql://127.0.0.1/colegio_test?createDatabaseIfNotExist=true&useSSL=false
+
+ mail:
+    host: "smtp.mailtrap.io"
+    port: 2525
+    protocol: 'smtp'
+    username: ""
+    password: ""
 
 server:
   port: 8084
