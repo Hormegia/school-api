@@ -15,7 +15,7 @@ Para configurar la conexión a la base de datos se debe crear una sección datas
 datasource:  
   username: root  
   password: ''  
-  url: jdbc:mysql://[url_bd]/nombre_bd?createDatabaseIfNotExist=true&useSSL=false
+  url: jdbc:mysql://[url_bd]/[nombre_bd]?createDatabaseIfNotExist=true&useSSL=false
 ```
 
 ### Configurar Email
