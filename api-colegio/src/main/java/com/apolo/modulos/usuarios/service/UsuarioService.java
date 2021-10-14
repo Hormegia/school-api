@@ -76,7 +76,7 @@ public class UsuarioService implements IUsuarioService {
 
         Usuario usuario = usuarioOptional.get();
         if(usuario.getId() != rolUsuario.getUsuario().getId())
-            throw new ErrorGeneralExcepcion("No coinciden los id del usuario y del rol");
+            throw new ErrorGeneralExcepcion("No coinciden los id de usuarios");
 
         Usuario usuarioAtenticado = usuarioRepository.findUsuarioByCorreo(SecurityContextHolder.getContext().getAuthentication().getName().toString()).get();
 
@@ -128,7 +128,7 @@ public class UsuarioService implements IUsuarioService {
 
         GenericSpecification<Usuario> genericSpecification = new GenericSpecification<>();
 
-        if(esColaborador)
+        if(esColaborador != null && esColaborador)
             genericSpecification.add(new SearchCriteria("colaborador", null,
                     SearchOperation.IS_NOT_NULL));
         else
