@@ -72,6 +72,7 @@ public class MatriculaService implements IMatriculaService{
 
         matricula.setEstudiante(estudiante);
         matricula.setGrado(grado);
+        matricula.setPeriodoAcademico(periodoAcademico);
 
         Matricula matricula1 = matriculaRepository.save(matricula);
 
