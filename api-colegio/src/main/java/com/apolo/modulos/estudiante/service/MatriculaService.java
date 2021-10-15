@@ -94,7 +94,9 @@ public class MatriculaService implements IMatriculaService{
         informacionAdicionalRepository.save(informacionAdicional);
 
         for (InformacionEducativa ie: informacionEducativa) {
+            Grado gradoHistorial = gradoRepository.findById(ie.getGrado().getId()).get();
             ie.setMatricula(matricula);
+            ie.setGrado(gradoHistorial);
             informacionEducativaRepository.save(ie);
         }
 
