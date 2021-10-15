@@ -8,22 +8,6 @@ import io.swagger.annotations.ApiModel;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * datos variables
- *
- * direccion
- * barrio
- * localidad
- * estrato
- * nivel sisben
- * puntaje sisben
- * aficiones o hobbies
- * cirugías
- * eps
- * ars
- * ips
- *
- */
 
 @Table(
         uniqueConstraints=
@@ -134,13 +118,6 @@ public class Estudiante extends Persona {
         this.ciudadExpedicion = ciudadExpedicion;
     }
 
-    public String getGrupo_sanguineo() {
-        return grupoSanguineo;
-    }
-
-    public void setGrupo_sanguineo(String grupo_sanguineo) {
-        this.grupoSanguineo = grupo_sanguineo;
-    }
 
     public String isRh() {
         return rh;

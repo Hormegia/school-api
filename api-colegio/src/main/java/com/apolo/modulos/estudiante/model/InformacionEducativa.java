@@ -3,7 +3,6 @@ package com.apolo.modulos.estudiante.model;
 import com.apolo.modulos.grados.model.Grado;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
@@ -22,7 +21,8 @@ public class InformacionEducativa {
 
     private String institucion;
 
-    @ManyToOne()
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Grado grado;
 
     @OneToOne(cascade = {CascadeType.ALL})

@@ -35,8 +35,6 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
 
         String [] message  = ex.getMessage().split(" ");
         String[] clase = message[2].split("\\.");
-        System.err.println(Arrays.toString(message));
-        System.err.println(Arrays.toString(clase));
         String nuevoMensaje = String.format("No existe %s con el id %s", clase[clase.length-1], message[6]);
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), nuevoMensaje, request.getDescription(false));
 

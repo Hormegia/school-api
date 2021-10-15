@@ -72,6 +72,7 @@ public class MatriculaService implements IMatriculaService{
 
         matricula.setEstudiante(estudiante);
         matricula.setGrado(grado);
+        matricula.setPeriodoAcademico(periodoAcademico);
 
         Matricula matricula1 = matriculaRepository.save(matricula);
 
@@ -93,7 +94,9 @@ public class MatriculaService implements IMatriculaService{
         informacionAdicionalRepository.save(informacionAdicional);
 
         for (InformacionEducativa ie: informacionEducativa) {
+            Grado gradoHistorial = gradoRepository.findById(ie.getGrado().getId()).get();
             ie.setMatricula(matricula);
+            ie.setGrado(gradoHistorial);
             informacionEducativaRepository.save(ie);
         }
 
