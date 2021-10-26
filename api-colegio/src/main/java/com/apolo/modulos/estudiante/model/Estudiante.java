@@ -16,6 +16,7 @@ import java.util.Date;
 
 @Entity
 @ApiModel(description = "Estudiante registrado")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Estudiante extends Persona {
 
 

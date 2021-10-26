@@ -31,8 +31,8 @@ public class EstudianteJPAResource {
     }
 
     //estudiantes por filtro
-    // GET  /estudiantes/
-    @GetMapping("/estudiantes")
+    // POST  /estudiantes/
+    @PostMapping("/estudiantes/filtro")
     public List<Estudiante> getByFilter(@RequestBody FiltroEstudianteRequest filtroEstudianteRequest) {
         return iEstudianteService.obtenerEstudiantesPorFiltro(filtroEstudianteRequest);
     }

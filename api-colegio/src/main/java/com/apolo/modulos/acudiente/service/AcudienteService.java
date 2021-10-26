@@ -75,7 +75,7 @@ public class AcudienteService implements IAcudienteService {
     public Optional<Acudiente> findById(Long id) {
         Optional<Acudiente> acudiente = acudienteRepository.findById(id);
         if (!acudiente.isPresent())
-            throw new ObjetoNoEncontradoException("No se existe un acudiente con el usuario id: " + id);
+            throw new ObjetoNoEncontradoException("No existe un acudiente con el usuario id: " + id);
 
         return acudiente;
     }

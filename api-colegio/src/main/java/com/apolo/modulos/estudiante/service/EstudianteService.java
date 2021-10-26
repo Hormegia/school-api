@@ -2,6 +2,7 @@ package com.apolo.modulos.estudiante.service;
 
 import com.apolo.modulos.estudiante.dao.FiltroEstudianteRequest;
 import com.apolo.modulos.estudiante.model.Estudiante;
+import com.apolo.modulos.estudiante.model.Estudiante_;
 import com.apolo.modulos.estudiante.repository.EstudianteRepository;
 import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
@@ -31,15 +32,15 @@ public class EstudianteService implements IEstudianteService {
         GenericSpecification<Estudiante> genericSpecification = new GenericSpecification<>();
 
         if(filtro.getPrimerNombre() != null)
-            genericSpecification.add(new SearchCriteria("primerNombre", filtro.getPrimerNombre(),
+            genericSpecification.add(new SearchCriteria(Estudiante_.PRIMER_NOMBRE, filtro.getPrimerNombre(),
                     SearchOperation.EQUAL));
 
         if(filtro.getPrimerApellido() != null)
-            genericSpecification.add(new SearchCriteria("primerApellido", filtro.getPrimerApellido(),
+            genericSpecification.add(new SearchCriteria(Estudiante_.PRIMER_APELLIDO, filtro.getPrimerApellido(),
                     SearchOperation.EQUAL));
 
         if(filtro.getTipoDocumento() != null && filtro.getDocumento() != null){
-            genericSpecification.add(new SearchCriteria("documento", filtro.getDocumento(),
+            genericSpecification.add(new SearchCriteria(Estudiante_.DOCUMENTO, filtro.getDocumento(),
                     SearchOperation.EQUAL));
 
         }
