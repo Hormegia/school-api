@@ -2,6 +2,7 @@ package com.apolo.modulos.periodo.academico.resource;
 
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
 import com.apolo.modulos.periodo.academico.repository.PeriodoAcademicoRepository;
+import com.apolo.modulos.periodo.academico.service.PeriodoAcademicoService;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -18,12 +19,15 @@ import java.util.Optional;
 public class PeriodoAcademicoJPAResource {
 
     private final PeriodoAcademicoRepository periodoAcademicoRepository;
+    private final PeriodoAcademicoService periodoAcademicoService;
 
 
     @Autowired
-    public PeriodoAcademicoJPAResource(PeriodoAcademicoRepository periodoAcademicoRepository) {
+    public PeriodoAcademicoJPAResource(PeriodoAcademicoRepository periodoAcademicoRepository, PeriodoAcademicoService periodoAcademicoService) {
         this.periodoAcademicoRepository = periodoAcademicoRepository;
+        this.periodoAcademicoService = periodoAcademicoService;
     }
+
     //todos los periodos
     // GET  /periodo/
     @GetMapping("/periodos")
@@ -35,7 +39,7 @@ public class PeriodoAcademicoJPAResource {
     //Trae un periodo por id
     // GET  /periodos/id
     @GetMapping("/periodos/{id}")
-    public EntityModel<PeriodoAcademico> getById(@PathVariable int id) {
+    public EntityModel<PeriodoAcademico> getById(@PathVariable Long id) {
 
         Optional<PeriodoAcademico> periodo = periodoAcademicoRepository.findById(id);
         if (!periodo.isPresent())
@@ -55,14 +59,14 @@ public class PeriodoAcademicoJPAResource {
     //eliminar periodo
     //periodo/id
     @DeleteMapping("/periodos/{id}")
-    public void deleteById(@PathVariable int id) {
+    public void deleteById(@PathVariable Long id) {
         periodoAcademicoRepository.deleteById(id);
     }
 
     //crear periodo
     @PostMapping("/periodos")
     public EntityModel<PeriodoAcademico> creaOEditarPeriodo(@Valid @RequestBody PeriodoAcademico periodoAcademico) {
-        Integer idPeriodo = periodoAcademico.getId();
+        Long idPeriodo = periodoAcademico.getId();
 
         if (idPeriodo != null) {
             Optional<PeriodoAcademico> periodoExistente = periodoAcademicoRepository.findById(idPeriodo);
@@ -72,6 +76,7 @@ public class PeriodoAcademicoJPAResource {
             periodoAcademico.setFechaCreacionPeriodo(new Date());
         }
 
+        periodoAcademicoService.verificarPeriodosSobrelapados(periodoAcademico);
         PeriodoAcademico nuevoPeriodoAcademico = periodoAcademicoRepository.save(periodoAcademico);
 
         return EntityModel.of(nuevoPeriodoAcademico);

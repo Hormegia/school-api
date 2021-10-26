@@ -13,7 +13,7 @@ public class PeriodoAcademico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Size(min=12, max=25)
     private String nombre;
@@ -58,11 +58,11 @@ public class PeriodoAcademico {
         this.estado = estado;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -71,14 +71,14 @@ public class UsuarioService implements IUsuarioService {
 
 
         if(!usuarioOptional.isPresent()){
-            throw new ObjetoNoEncontradoException("No se encuentra un usuario con el id:" + id);
+            throw new ObjetoNoEncontradoException("No se encuentra un usuario con el id: " + id);
         }
 
         Usuario usuario = usuarioOptional.get();
         if(usuario.getId() != rolUsuario.getUsuario().getId())
             throw new ErrorGeneralExcepcion("No coinciden los id de usuarios");
 
-        Usuario usuarioAtenticado = usuarioRepository.findUsuarioByCorreo(SecurityContextHolder.getContext().getAuthentication().getName().toString()).get();
+        Usuario usuarioAtenticado = getUsuarioAutenticado();
 
         rolUsuario.setUsuarioCreacion(usuarioAtenticado);
         rolUsuario.setFechaCreacion(new Date());
@@ -140,4 +140,8 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findAll(genericSpecification);
     }
 
+
+    public Usuario getUsuarioAutenticado(){
+        return usuarioRepository.findUsuarioByCorreo(SecurityContextHolder.getContext().getAuthentication().getName().toString()).get();
+    }
 }

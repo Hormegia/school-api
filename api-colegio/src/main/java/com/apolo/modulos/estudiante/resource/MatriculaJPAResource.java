@@ -3,12 +3,10 @@ package com.apolo.modulos.estudiante.resource;
 
 import com.apolo.modulos.estudiante.model.Matricula;
 import com.apolo.modulos.estudiante.repository.MatriculaRepository;
-import com.apolo.modulos.usuarios.model.Usuario;
+import com.apolo.modulos.estudiante.service.MatriculaService;
 import com.lowagie.text.DocumentException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IWebContext;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -16,7 +14,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -28,8 +25,11 @@ public class MatriculaJPAResource {
 
     private final MatriculaRepository matriculaRepository;
 
-    public MatriculaJPAResource(MatriculaRepository matriculaRepository) {
+    private final MatriculaService matriculaService;
+
+    public MatriculaJPAResource(MatriculaRepository matriculaRepository, MatriculaService matriculaService) {
         this.matriculaRepository = matriculaRepository;
+        this.matriculaService = matriculaService;
     }
 
     //crear matricula
@@ -37,6 +37,15 @@ public class MatriculaJPAResource {
     @GetMapping("/matriculas")
     public List<Matricula> getAll() {
         return matriculaRepository.findAll();
+    }
+
+    //buscar las matriculas de todos los estudiantes que tenga un acudiente en un periodo académico
+    @GetMapping("/matriculas/acudientes/{idAcudiente}/periodosAcademicos/{idPeriodoAcademico}")
+    public List<Matricula> getAllMatriculasByAcudienteAndPeriodoAcademico(@PathVariable Long idAcudiente, @PathVariable Long idPeriodoAcademico){
+
+
+        return matriculaService.getAllMatriculasByAcudienteAndPeriodoAcademico(idAcudiente, idPeriodoAcademico);
+
     }
 
     @GetMapping("/matriculas/{id}/pdf")
