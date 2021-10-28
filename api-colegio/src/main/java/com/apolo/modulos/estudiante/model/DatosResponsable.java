@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @ApiModel(description = "responsable de la matricula del estudiante")
@@ -32,6 +33,10 @@ public class DatosResponsable extends Persona {
     @OneToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties()
     private Matricula matricula;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JsonIgnoreProperties()
+    private List<Estudiante> estudiante;
 
     public DatosResponsable() {
     }
@@ -122,5 +127,13 @@ public class DatosResponsable extends Persona {
 
     public void setEsAcudiente(Boolean esAcudiente) {
         this.esAcudiente = esAcudiente;
+    }
+
+    public List<Estudiante> getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(List<Estudiante> estudiante) {
+        this.estudiante = estudiante;
     }
 }

@@ -11,18 +11,16 @@ import com.apolo.modulos.grados.repository.GradoRepository;
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
 import com.apolo.modulos.periodo.academico.repository.PeriodoAcademicoRepository;
 import com.apolo.modulos.usuarios.model.Usuario;
-import com.apolo.modulos.usuarios.repository.UsuarioRepository;
 import com.apolo.modulos.usuarios.service.UsuarioService;
 import com.apolo.spring.database.GenericSpecification;
 import com.apolo.spring.database.SearchCriteria;
 import com.apolo.spring.database.SearchOperation;
+import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +73,18 @@ public class MatriculaService implements IMatriculaService{
 
         Estudiante estudiante = estudianteRepository.findById(matricula.getEstudiante().getId()).get();
 
+
+        // Se verifica que el estudiante todavía no se haya matriculado en el periodo académico recibido
+        GenericSpecification<Matricula> genericSpecificationMatricula = new GenericSpecification<>();
+
+        genericSpecificationMatricula.add(new SearchCriteria(Matricula_.ESTUDIANTE, estudiante.getId(), SearchOperation.EQUAL));
+        genericSpecificationMatricula.add(new SearchCriteria(Matricula_.PERIODO_ACADEMICO, periodoAcademico.getId(), SearchOperation.EQUAL));
+
+        List<Matricula> matriculasRegistradas = matriculaRepository.findAll(genericSpecificationMatricula);
+
+        if(!matriculasRegistradas.isEmpty())
+            throw new ErrorGeneralExcepcion(String.format("El estudiante ya se encuentra matriculado en el periodo académico %s", periodoAcademico.getNombre()));
+
         DatosResponsable padre = matriculaEstudianteRequest.getDatosPadre();
 
         DatosResponsable madre = matriculaEstudianteRequest.getDatosMadre();
@@ -85,14 +95,6 @@ public class MatriculaService implements IMatriculaService{
 
         InformacionEducativa [] informacionEducativa = matriculaEstudianteRequest.getInformacionEducativa();
 
-        madre.setEsPadre(false);
-        madre.setEsAcudiente(false);
-
-        padre.setEsPadre(true);
-        padre.setEsAcudiente(false);
-
-        acudiente.setEsAcudiente(true);
-
         matricula.setEstudiante(estudiante);
         matricula.setGrado(grado);
         matricula.setPeriodoAcademico(periodoAcademico);
@@ -102,16 +104,54 @@ public class MatriculaService implements IMatriculaService{
         informacionAdicional.setMatricula(matricula1);
 
 
-        padre.setMatricula(matricula1);
 
-        madre.setMatricula(matricula1);
+        //Se verifica que la información de los padres coincida con la información registrada para el estudiante
+
+        madre.setEsPadre(false);
+        madre.setEsAcudiente(false);
+
+        padre.setEsPadre(true);
+        padre.setEsAcudiente(false);
+
+        acudiente.setEsAcudiente(true);
+
+        if(madre.getId() == null){
+
+            GenericSpecification<DatosResponsable> genericSpecificationMadre = new GenericSpecification<>();
+            genericSpecificationMadre.add(new SearchCriteria(DatosResponsable_.ESTUDIANTE, estudiante.getId(), SearchOperation.EQUAL));
+            genericSpecificationMadre.add(new SearchCriteria(DatosResponsable_.ES_PADRE, false, SearchOperation.EQUAL));
+
+            List<DatosResponsable> madreExistente = datosResponsableRepository.findAll(genericSpecificationMadre);
+
+            if(!madreExistente.isEmpty() && !madre.getNombreCompleto().equals(madreExistente.get(0).getNombreCompleto()))
+                throw new ErrorGeneralExcepcion("Los datos asociados a  la madre no corresponden con la información registrada en anteriores matriculas");
+
+        }else{
+            madre.getEstudiante().add(estudiante);
+            datosResponsableRepository.save(madre);
+
+        }
+
+        if(padre.getId() == null){
+
+            GenericSpecification<DatosResponsable> genericSpecificationPadre = new GenericSpecification<>();
+            genericSpecificationPadre.add(new SearchCriteria(DatosResponsable_.ESTUDIANTE, estudiante.getId(), SearchOperation.EQUAL));
+            genericSpecificationPadre.add(new SearchCriteria(DatosResponsable_.ES_PADRE, true, SearchOperation.EQUAL));
+
+            List<DatosResponsable> padreExistente = datosResponsableRepository.findAll(genericSpecificationPadre);
+
+            if(!padreExistente.isEmpty() && !padre.getNombreCompleto().equals(padreExistente.get(0).getNombreCompleto()))
+                throw new ErrorGeneralExcepcion("Los datos asociados al padre no corresponden con la información registrada en anteriores matriculas");
+
+        }else{
+
+            padre.getEstudiante().add(estudiante);
+            datosResponsableRepository.save(padre);
+
+        }
 
         acudiente.setMatricula(matricula1);
 
-
-
-        datosResponsableRepository.save(padre);
-        datosResponsableRepository.save(madre);
         datosResponsableRepository.save(acudiente);
 
         informacionAdicionalRepository.save(informacionAdicional);
