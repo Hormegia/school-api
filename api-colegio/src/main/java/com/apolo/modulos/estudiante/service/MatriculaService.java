@@ -10,6 +10,7 @@ import com.apolo.modulos.grados.model.Grado;
 import com.apolo.modulos.grados.repository.GradoRepository;
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
 import com.apolo.modulos.periodo.academico.repository.PeriodoAcademicoRepository;
+import com.apolo.modulos.periodo.academico.service.PeriodoAcademicoService;
 import com.apolo.modulos.usuarios.model.Usuario;
 import com.apolo.modulos.usuarios.service.UsuarioService;
 import com.apolo.spring.database.GenericSpecification;
@@ -43,13 +44,15 @@ public class MatriculaService implements IMatriculaService{
 
     private final PeriodoAcademicoRepository periodoAcademicoRepository;
 
+    private final PeriodoAcademicoService periodoAcademicoService;
+
     private final UsuarioService usuarioService;
 
     private final AcudienteService acudienteService;
 
 
     @Autowired
-    public MatriculaService(DatosResponsableRepository datosResponsableRepository, InformacionAdicionalRepository informacionAdicionalRepository, InformacionEducativaRepository informacionEducativaRepository, MatriculaRepository matriculaRepository, GradoRepository gradoRepository, EstudianteRepository estudianteRepository, PeriodoAcademicoRepository periodoAcademicoRepository, UsuarioService usuarioService, AcudienteService acudienteService) {
+    public MatriculaService(DatosResponsableRepository datosResponsableRepository, InformacionAdicionalRepository informacionAdicionalRepository, InformacionEducativaRepository informacionEducativaRepository, MatriculaRepository matriculaRepository, GradoRepository gradoRepository, EstudianteRepository estudianteRepository, PeriodoAcademicoRepository periodoAcademicoRepository, PeriodoAcademicoService periodoAcademicoService, UsuarioService usuarioService, AcudienteService acudienteService) {
         this.datosResponsableRepository = datosResponsableRepository;
         this.informacionAdicionalRepository = informacionAdicionalRepository;
         this.informacionEducativaRepository = informacionEducativaRepository;
@@ -57,6 +60,7 @@ public class MatriculaService implements IMatriculaService{
         this.gradoRepository = gradoRepository;
         this.estudianteRepository = estudianteRepository;
         this.periodoAcademicoRepository = periodoAcademicoRepository;
+        this.periodoAcademicoService = periodoAcademicoService;
         this.usuarioService = usuarioService;
         this.acudienteService = acudienteService;
     }
@@ -198,5 +202,23 @@ public class MatriculaService implements IMatriculaService{
 
 
         return matriculaRepository.findAll(genericSpecificationMatricula);
+    }
+
+    public Boolean verificarAntiguedadMatricula (Matricula matricula){
+
+        PeriodoAcademico periodoAcademico = matricula.getPeriodoAcademico();
+        Optional<PeriodoAcademico> periodoAnteriorOptional = periodoAcademicoService.obtenerPeriodoAnterior(periodoAcademico);
+        PeriodoAcademico periodoAnterior = null;
+
+        if(periodoAnteriorOptional.isPresent())
+             periodoAnterior = periodoAnteriorOptional.get();
+        else
+            return false;
+
+        Matricula matriculaAntiguo = matriculaRepository.findByEstudianteIdAndPeriodoAcademicoId(matricula.getEstudiante().getId(),
+                periodoAnterior.getId());
+
+        return matriculaAntiguo != null;
+
     }
 }

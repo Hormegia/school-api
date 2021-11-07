@@ -27,9 +27,9 @@ import java.util.UUID;
 public class RegistrarListener implements ApplicationListener<onRegistroUsuarioEvent> {
 
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    private IUsuarioService iUsuarioService;
+    private final IUsuarioService iUsuarioService;
 
     @Autowired
     public RegistrarListener(JavaMailSender mailSender, IUsuarioService iUsuarioService) {
@@ -57,8 +57,6 @@ public class RegistrarListener implements ApplicationListener<onRegistroUsuarioE
 
         TemplateEngine templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
-
-        //IWebContext context = new WebContext( request,  response,  request.getServletContext());
 
 
 

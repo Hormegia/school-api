@@ -23,10 +23,20 @@ public class SearchCriteria {
     }
 
     public SearchCriteria(String key, Object value, SearchOperation operation, Date date) {
+
         this.key = key;
         this.value = value;
         this.operation = operation;
         this.date = date;
+
+
+
+        if(value.getClass().isAssignableFrom(java.sql.Timestamp.class)){
+            date = new Date(date.getTime());
+            this.date = date;
+            this.value = date;
+        }
+
     }
 
     //la lista de joins se debe enviar en el orden de jeraquia correspondient al modelo

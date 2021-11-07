@@ -7,4 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DatosResponsableRepository extends JpaRepository<DatosResponsable, Long>, JpaSpecificationExecutor<DatosResponsable> {
+
+    DatosResponsable findByEstudianteIdAndEsAcudiente(Long idEstudiante, Boolean esAcudiente);
+
+    DatosResponsable findByEstudianteIdAndEsPadreAndEsAcudienteFalse(Long idEstudiante, Boolean esPadre);
+
+
 }

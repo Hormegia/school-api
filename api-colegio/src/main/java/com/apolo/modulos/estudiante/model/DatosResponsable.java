@@ -136,4 +136,21 @@ public class DatosResponsable extends Persona {
     public void setEstudiante(List<Estudiante> estudiante) {
         this.estudiante = estudiante;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("DatosResponsable{");
+        sb.append("id=").append(id);
+        sb.append(", nombreCompleto='").append(nombreCompleto).append('\'');
+        sb.append(", numeroFijo='").append(numeroFijo).append('\'');
+        sb.append(", direccion='").append(direccion).append('\'');
+        sb.append(", ocupacion='").append(ocupacion).append('\'');
+        sb.append(", correo='").append(correo).append('\'');
+        sb.append(", esPadre=").append(esPadre);
+        sb.append(", esAcudiente=").append(esAcudiente);
+        sb.append(", matricula=").append(matricula);
+        sb.append(", estudiante=").append(estudiante);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -4,9 +4,14 @@ import com.apolo.modulos.acudiente.model.Acudiente;
 import com.apolo.modulos.usuarios.model.Persona;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
+import sun.util.resources.LocaleData;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 @Table(
@@ -70,6 +75,17 @@ public class Estudiante extends Persona {
     public Estudiante() {
         super();
     }
+
+
+    public int getEdad(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.fechaNacimiento);
+        LocalDate nacimiento = LocalDate.of(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        return Period.between(nacimiento, LocalDate.now()).getYears();
+    }
+
 
     public Long getId() {
         return id;

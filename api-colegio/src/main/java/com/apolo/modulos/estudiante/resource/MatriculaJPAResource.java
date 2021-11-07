@@ -1,35 +1,48 @@
 package com.apolo.modulos.estudiante.resource;
 
 
+import com.apolo.modulos.estudiante.model.DatosResponsable;
+import com.apolo.modulos.estudiante.model.Estudiante;
+import com.apolo.modulos.estudiante.model.InformacionEducativa;
 import com.apolo.modulos.estudiante.model.Matricula;
+import com.apolo.modulos.estudiante.repository.DatosResponsableRepository;
+import com.apolo.modulos.estudiante.repository.InformacionEducativaRepository;
 import com.apolo.modulos.estudiante.repository.MatriculaRepository;
 import com.apolo.modulos.estudiante.service.MatriculaService;
+import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.lowagie.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.IWebContext;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class MatriculaJPAResource {
 
     private final MatriculaRepository matriculaRepository;
-
+    private final TemplateEngine templateEngine;
     private final MatriculaService matriculaService;
+    private final InformacionEducativaRepository informacionEducativaRepository;
+    private final DatosResponsableRepository datosResponsableRepository;
 
-    public MatriculaJPAResource(MatriculaRepository matriculaRepository, MatriculaService matriculaService) {
+    @Autowired
+    public MatriculaJPAResource(MatriculaRepository matriculaRepository, TemplateEngine templateEngine, MatriculaService matriculaService, InformacionEducativaRepository informacionEducativaRepository, DatosResponsableRepository datosResponsableRepository) {
         this.matriculaRepository = matriculaRepository;
+        this.templateEngine = templateEngine;
         this.matriculaService = matriculaService;
+        this.informacionEducativaRepository = informacionEducativaRepository;
+        this.datosResponsableRepository = datosResponsableRepository;
     }
 
     //crear matricula
@@ -48,18 +61,41 @@ public class MatriculaJPAResource {
 
     }
 
-    @GetMapping("/matriculas/{id}/pdf")
-    public String pdf (HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setSuffix(".html");
-        templateResolver.setPrefix("templates/");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
+    @GetMapping("/matriculas/{idMatricula}/pdf")
+    public String pdf (@PathVariable Long idMatricula, Model model, HttpServletResponse response) throws DocumentException, IOException {
 
-        TemplateEngine templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
+        Optional<Matricula> matriculaOptional = matriculaRepository.findById(idMatricula);
+
+        if(!matriculaOptional.isPresent())
+            throw new ObjetoNoEncontradoException("No existe una matricula con el id: " + idMatricula);
+
+        Matricula matricula = matriculaOptional.get();
+
+        Date fecha = new Date();
+        Context context = new Context();
+
+        Estudiante estudiante = matricula.getEstudiante();
+        List<InformacionEducativa> informacionEducativa = informacionEducativaRepository.getByMatriculaIdOrderByFechaAsc(matricula.getId());
+        DatosResponsable acudiente = datosResponsableRepository.findByEstudianteIdAndEsAcudiente(estudiante.getId(), true);
+        DatosResponsable madre = datosResponsableRepository.findByEstudianteIdAndEsPadreAndEsAcudienteFalse(estudiante.getId(), false);
+        DatosResponsable padre = datosResponsableRepository.findByEstudianteIdAndEsPadreAndEsAcudienteFalse(estudiante.getId(), true);
 
 
-        IWebContext context = new WebContext( request,  response,  request.getServletContext());
+        context.setVariable("matricula", matricula);
+        context.setVariable("periodoAcademico", matricula.getPeriodoAcademico());
+        context.setVariable("grado", matricula.getGrado());
+        context.setVariable("estudiante", estudiante);
+        context.setVariable("informacionEducativa", informacionEducativa);
+        context.setVariable("acudiente", acudiente);
+        context.setVariable("madre", madre);
+        context.setVariable("padre", padre);
+        context.setVariable("fecha", new SimpleDateFormat("dd-MM-yyyy").format(fecha));
+        context.setVariable("hora", new SimpleDateFormat("hh:mm:ss").format(fecha));
+        context.setVariable("year", new SimpleDateFormat("yyyy").format(fecha));
+        context.setVariable("antiguo", matriculaService.verificarAntiguedadMatricula(matricula));
+
+
+
         String outputFolder = System.getProperty("user.home") + File.separator + "matricula.pdf";
         OutputStream outputStream = new FileOutputStream(outputFolder);
 
