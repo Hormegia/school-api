@@ -22,7 +22,7 @@ public class TokenActivacionUsuario {
     @ManyToOne (targetEntity = Usuario.class, fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    private Date FechaExpiracion;
+    private Date fechaExpiracion;
 
     private Date calcularFechaExpiracion (int tiempoExpiracionEnMinutos){
         Calendar cal = Calendar.getInstance();
@@ -38,6 +38,8 @@ public class TokenActivacionUsuario {
     public TokenActivacionUsuario(Usuario usuario, String token) {
         this.token = token;
         this.usuario = usuario;
+
+        this.fechaExpiracion = calcularFechaExpiracion(EXPIRATION);
     }
 
     public Long getId() {
@@ -65,10 +67,23 @@ public class TokenActivacionUsuario {
     }
 
     public Date getFechaExpiracion() {
-        return FechaExpiracion;
+        return fechaExpiracion;
     }
 
     public void setFechaExpiracion(Date fechaExpiracion) {
-        FechaExpiracion = fechaExpiracion;
+        this.fechaExpiracion = fechaExpiracion;
+    }
+
+
+    public void actualizarTOken(final String token) {
+        this.token = token;
+        this.fechaExpiracion = calcularFechaExpiracion(EXPIRATION);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Token [String=").append(this.token).append("]").append("[Expires").append(this.fechaExpiracion).append("]");
+        return builder.toString();
     }
 }

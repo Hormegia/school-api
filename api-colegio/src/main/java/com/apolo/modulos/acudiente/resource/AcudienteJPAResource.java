@@ -7,6 +7,7 @@ import com.apolo.modulos.acudiente.service.IAcudienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,12 +29,14 @@ public class AcudienteJPAResource {
 
 
     @GetMapping("/acudientes")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public List<Acudiente> getByFilter(@RequestBody FiltroAcudienteRequest filtroAcudienteRequest) {
 
         return acudienteService.obtenerAcudientesPorFiltro(filtroAcudienteRequest);
     }
 
     @GetMapping("/acudientes/{id}")
+    @PreAuthorize("hasRole('ACUDIENTE')")
     public EntityModel<Acudiente> getById(@PathVariable Long id) {
 
         Optional<Acudiente> acudiente = acudienteService.findById(id);
@@ -42,6 +45,7 @@ public class AcudienteJPAResource {
     }
 
     @PostMapping("/acudientes/{id}/estudiantes")
+    @PreAuthorize("hasRole('ACUDIENTE')")
     public List<Estudiante> asignarEstudiante(@Valid @RequestBody Estudiante estudiante, @PathVariable Long id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();
@@ -55,6 +59,7 @@ public class AcudienteJPAResource {
 
     //retorna todos los estudiantes de un usuario
     @GetMapping("/acudientes/{id}/estudiantes")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public List<Estudiante> getEstudiantes(@PathVariable Long id ){
 
         Acudiente acudiente = acudienteService.findById(id).get();

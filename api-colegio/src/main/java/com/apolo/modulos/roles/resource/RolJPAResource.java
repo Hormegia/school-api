@@ -11,6 +11,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -30,12 +31,14 @@ public class RolJPAResource {
 
     //todos los roles
     @GetMapping("/roles")
+    @RolesAllowed({"COLABORADOR"})
     public List<Rol> retrieveAllRoles() {
         return rolRepository.findAll();
     }
 
     //todas las credenciales
     @GetMapping("/roles/credenciales")
+    @RolesAllowed({"COLABORADOR"})
     public List<Credencial> getCreddenciales() {
         return  Arrays.asList(Credencial.values());
     }
@@ -43,6 +46,7 @@ public class RolJPAResource {
     //obtener rol
     //roles/id
     @GetMapping("/roles/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<Rol> getRol(@PathVariable Long id) {
         Optional<Rol> rol = rolRepository.findById(id);
 
@@ -55,6 +59,7 @@ public class RolJPAResource {
     //eliminar rol
     //roles/id
     @DeleteMapping("/roles/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public ResponseEntity<?> deleteRol(@PathVariable Long id) {
 
         EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
@@ -65,6 +70,7 @@ public class RolJPAResource {
     }
 
     @PostMapping("/roles")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<Rol> creaOEditarRol(@Valid @RequestBody Rol rol) {
         Long idRol = rol.getId();
 

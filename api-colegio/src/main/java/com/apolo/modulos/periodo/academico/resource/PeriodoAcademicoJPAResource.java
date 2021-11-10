@@ -10,6 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ public class PeriodoAcademicoJPAResource {
     //todos los periodos
     // GET  /periodo/
     @GetMapping("/periodos")
+    @RolesAllowed({"COLABORADOR"})
     public List<PeriodoAcademico> getAll() {
         return periodoAcademicoRepository.findAll();
     }
@@ -40,6 +42,7 @@ public class PeriodoAcademicoJPAResource {
     //Trae un periodo por id
     // GET  /periodos/id
     @GetMapping("/periodos/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<PeriodoAcademico> getById(@PathVariable Long id) {
 
         Optional<PeriodoAcademico> periodo = periodoAcademicoRepository.findById(id);
@@ -61,12 +64,14 @@ public class PeriodoAcademicoJPAResource {
     //eliminar periodo
     //periodo/id
     @DeleteMapping("/periodos/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public void deleteById(@PathVariable Long id) {
         periodoAcademicoRepository.deleteById(id);
     }
 
     //crear periodo
     @PostMapping("/periodos")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<PeriodoAcademico> creaOEditarPeriodo(@Valid @RequestBody PeriodoAcademico periodoAcademico) {
         Long idPeriodo = periodoAcademico.getId();
 

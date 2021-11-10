@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,7 @@ public class GradoJPAResource {
     }
 
     @GetMapping("/grados")
+    @RolesAllowed({"COORDINADOR", "ACUDIENTE"})
     public List<Grado> getAllGrados() {
         return gradoRepository.findAllByOrderByIdAsc();
     }

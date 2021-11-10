@@ -13,14 +13,21 @@ import com.apolo.modulos.usuarios.model.Usuario;
 import com.apolo.modulos.usuarios.repository.TokenActivacionUsuarioRepository;
 import com.apolo.modulos.usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -35,12 +42,18 @@ public class UsuarioService implements IUsuarioService {
 
     private final RolUsuarioRepository rolUsuarioRepository;
 
+    private final JavaMailSender mailSender;
+
+    private final TemplateEngine templateEngine;
+
     @Autowired
-    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, TokenActivacionUsuarioRepository tokenActivacionUsuarioRepository, RolUsuarioRepository rolUsuarioRepository) {
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository usuarioRepository, TokenActivacionUsuarioRepository tokenActivacionUsuarioRepository, RolUsuarioRepository rolUsuarioRepository, JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.passwordEncoder = passwordEncoder;
         this.usuarioRepository = usuarioRepository;
         this.tokenActivacionUsuarioRepository = tokenActivacionUsuarioRepository;
         this.rolUsuarioRepository = rolUsuarioRepository;
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
     }
 
 
@@ -58,6 +71,15 @@ public class UsuarioService implements IUsuarioService {
     public void crearTokenActivacion(Usuario usuario, String token) {
         TokenActivacionUsuario tokenActivacionUsuario = new TokenActivacionUsuario(usuario, token);
         tokenActivacionUsuarioRepository.save(tokenActivacionUsuario);
+    }
+
+    @Override
+    public TokenActivacionUsuario generarNuevoTokenActivacion(String token) {
+        TokenActivacionUsuario vToken = tokenActivacionUsuarioRepository.findByToken(token);
+        vToken.actualizarTOken(UUID.randomUUID()
+                .toString());
+        vToken = tokenActivacionUsuarioRepository.save(vToken);
+        return vToken;
     }
 
     @Override
@@ -140,6 +162,35 @@ public class UsuarioService implements IUsuarioService {
         return usuarioRepository.findAll(genericSpecification);
     }
 
+
+    public void enviarCorreoConfirmacion (Usuario usuario, String token, String urlPath){
+        try {
+
+            String recipientAddress = usuario.getCorreo();
+            String subject = "Confirmación Registro";
+            String confirmationUrl = urlPath + "/activar/" + token;
+            String updateUrl = urlPath + "/reenviarTokenActivacion/" + token;
+
+            Context context = new Context();
+            context.setVariable("urlActivar", confirmationUrl);
+            context.setVariable("urlReenviar", updateUrl);
+            String html = templateEngine.process("activacionUsuario", context);
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+            MimeMessageHelper email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            email.setTo(recipientAddress);
+            email.setSubject(subject);
+            mimeMessage.setContent(html, "text/html");
+            mailSender.send(mimeMessage);
+
+        }catch (MessagingException exception){
+
+            exception.printStackTrace();
+        }
+
+    }
 
     public Usuario getUsuarioAutenticado(){
         return usuarioRepository.findUsuarioByCorreo(SecurityContextHolder.getContext().getAuthentication().getName().toString()).get();

@@ -12,6 +12,7 @@ import com.apolo.modulos.estudiante.service.MatriculaService;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
@@ -19,6 +20,7 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -48,12 +50,14 @@ public class MatriculaJPAResource {
     //crear matricula
     // GET  /usuario/
     @GetMapping("/matriculas")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public List<Matricula> getAll() {
         return matriculaRepository.findAll();
     }
 
     //buscar las matriculas de todos los estudiantes que tenga un acudiente en un periodo académico
     @GetMapping("/matriculas/acudientes/{idAcudiente}/periodosAcademicos/{idPeriodoAcademico}")
+    @RolesAllowed({"COORDINADOR", "ACUDIENTE"})
     public List<Matricula> getAllMatriculasByAcudienteAndPeriodoAcademico(@PathVariable Long idAcudiente, @PathVariable Long idPeriodoAcademico){
 
 
@@ -62,6 +66,7 @@ public class MatriculaJPAResource {
     }
 
     @GetMapping("/matriculas/{idMatricula}/pdf")
+    @RolesAllowed({"COORDINADOR", "ACUDIENTE"})
     public String pdf (@PathVariable Long idMatricula, Model model, HttpServletResponse response) throws DocumentException, IOException {
 
         Optional<Matricula> matriculaOptional = matriculaRepository.findById(idMatricula);

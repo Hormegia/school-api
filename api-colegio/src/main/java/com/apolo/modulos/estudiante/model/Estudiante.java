@@ -32,6 +32,8 @@ public class Estudiante extends Persona {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNacimiento;
 
+    private Boolean genero;
+
     private String ciudad;
 
     private String departamento;

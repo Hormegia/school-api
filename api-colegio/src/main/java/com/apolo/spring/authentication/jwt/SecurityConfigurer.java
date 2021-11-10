@@ -3,6 +3,8 @@ package com.apolo.spring.authentication.jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,18 +57,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_WHITELIST);
     }
 
-    //TODO cambiar el path en el yml
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http.httpBasic().disable();
         http.csrf().disable()
                 .authorizeRequests().antMatchers(WHITOUT_AUTH).permitAll()
-                .anyRequest().authenticated().and().cors()
+          //      .anyRequest().authenticated().and().cors()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(jwRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -87,5 +89,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(myUserDetailsService);
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
+    }
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "ADMIN > COORDINADOR \n COORDINADOR > COLABORADOR \n ADMIN > ACUDIENTE";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
     }
 }
