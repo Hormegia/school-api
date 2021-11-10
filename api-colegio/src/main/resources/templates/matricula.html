@@ -116,7 +116,7 @@
 
         <div class="header-title">
             <h1>COLEGIO ITD JUAN DEL CORRAL IED</h1>
-            <h1>MATRICULA AÑO 2019</h1>
+            <h1 th:text="${periodoAcademico.nombre}"></h1>
         </div>
         <div class="header-photo">
             <h1>FOTO</h1>
@@ -139,10 +139,10 @@
             <tbody>
             <tr>
                 <td>111001009583</td>
-                <td>TRANSICIÓN</td>
-                <td>MAÑANA</td>
-                <td>ANTIGUO</td>
-                <td>15</td>
+                <td th:text="${grado.nombre}"></td>
+                <td th:text="${matricula.getJornada()} ? 'MAÑANA' : 'TARDE'"></td>
+                <td th:text="${antiguo} ? 'ANTIGUO' : 'NUEVO'"></td>
+                <td th:text="${estudiante.getEdad()}"></td>
             </tr>
             </tbody>
         </table>
@@ -163,10 +163,10 @@
             </thead>
             <tbody>
             <tr>
-                <td>MONTEALEGRE</td>
-                <td>MONTEALEGRE</td>
-                <td>CRISTOPHER</td>
-                <td>ALEJANDRO</td>
+                <td th:text="${estudiante.getPrimerApellido()} ?: '-'"></td>
+                <td th:text="${estudiante.getSegundoApellido} ?: '-'"></td>
+                <td th:text="${estudiante.getPrimerNombre()} ?: '-'"></td>
+                <td th:text="${estudiante.getSegundoNombre()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -183,12 +183,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>2003-05-19</td>
-                <td>MEDELLIN</td>
-                <td>NARIÑO</td>
-                <td>CÉDULA</td>
-                <td>12345678985</td>
-                <td>BOGOTA</td>
+                <td th:text="${estudiante.getFechaNacimiento()} ?: '-'"></td>
+                <td th:text="${estudiante.getCiudad()} ?: '-'"></td>
+                <td th:text="${estudiante.getDepartamento()} ?: '-'"></td>
+                <td th:text="${estudiante.getTipoDocumento()} ?: '-'"></td>
+                <td th:text="${estudiante.getDocumento()} ?: '-'"></td>
+                <td th:text="${estudiante.getCiudadExpedicion()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -205,12 +205,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
-                <td>LAS FERIAS </td>
-                <td>ENGATIVA</td>
-                <td>4</td>
-                <td>4</td>
-                <td>52.08</td>
+                <td th:text="${estudiante.getDireccion()} ?: '-'"></td>
+                <td th:text="${estudiante.getBarrio()} ?: '-'"></td>
+                <td th:text="${estudiante.getLocalidad()} ?: '-'"></td>
+                <td th:text="${estudiante.getEstrato()} ?: '-'"></td>
+                <td th:text="${estudiante.getNivelSisben()} ?: '-'"></td>
+                <td th:text="${estudiante.getPuntajeSisben()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -224,9 +224,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>3102148046</td>
-                <td>NINGUNO </td>
-                <td>NINGUNA</td>
+                <td th:text="${estudiante.getNumeroCelular()} ?: '-'"></td>
+                <td th:text="${estudiante.getAficiones()} ?: '-'"></td>
+                <td th:text="${estudiante.getCirugias()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -242,11 +242,11 @@
             </thead>
             <tbody>
             <tr>
-                <td>COLSANITAS</td>
-                <td>COLSANITAS</td>
-                <td>SUCURSAL LAS FERIAS </td>
-                <td>AB</td>
-                <td>-</td>
+                <td th:text="${estudiante.getEps()} ?: '-'"></td>
+                <td th:text="${estudiante.getArs()} ?: '-'"></td>
+                <td th:text="${estudiante.getIps()} ?: '-'"></td>
+                <td th:text="${estudiante.getGrupoSanguineo()} ?: '-'"></td>
+                <td th:text="${estudiante.getRh()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -267,10 +267,10 @@
             </thead>
             <tbody>
             <tr>
-                <td>MARIA RUIZ PINTO</td>
-                <td>980675432123</td>
-                <td>3006418</td>
-                <td>3105033589</td>
+                <td th:text="${madre?.getNombreCompleto()} ?: '-'"></td>
+                <td th:text="${madre?.getDocumento()} ?: '-'"></td>
+                <td th:text="${madre?.getNumeroFijo()} ?: '-'"></td>
+                <td th:text="${madre?.getNumeroCelular()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -284,9 +284,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
-                <td>SEÑORA DE LA CA </td>
-                <td>mariaruizp@micorreo.com.co</td>
+                <td th:text="${madre?.getDireccion()} ?: '-'"></td>
+                <td th:text="${madre?.getOcupacion()} ?: '-'"></td>
+                <td th:text="${madre?.getCorreo()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -307,10 +307,10 @@
             </thead>
             <tbody>
             <tr>
-                <td>PEPITO PEREZ</td>
-                <td>123456777890</td>
-                <td>3006418</td>
-                <td>3005602018</td>
+                <td th:text="${padre?.getNombreCompleto()} ?: '-'"></td>
+                <td th:text="${padre?.getDocumento()} ?: '-'"></td>
+                <td th:text="${padre?.getNumeroFijo()} ?: '-'"></td>
+                <td th:text="${padre?.getNumeroCelular()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -324,9 +324,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
-                <td>Empleado</td>
-                <td>mariaruizp@micorreo.com.co</td>
+                <td th:text="${padre?.getDireccion()} ?: '-'"></td>
+                <td th:text="${padre?.getOcupacion()} ?: '-'"></td>
+                <td th:text="${padre?.getCorreo()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -347,10 +347,10 @@
             </thead>
             <tbody>
             <tr>
-                <td>MARIA RUIZ PINTO</td>
-                <td>980675432123</td>
-                <td>3006418</td>
-                <td>3105033589</td>
+                <td th:text="${acudiente?.getNombreCompleto()} ?: '-'"></td>
+                <td th:text="${acudiente?.getDocumento()} ?: '-'"></td>
+                <td th:text="${acudiente?.getNumeroFijo()} ?: '-'"></td>
+                <td th:text="${acudiente?.getNumeroCelular()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -364,9 +364,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>CALLE 10B #88A 17 INT 13 APTO 501</td>
-                <td>SEÑORA DE LA CA </td>
-                <td>mariaruizp@micorreo.com.co</td>
+                <td th:text="${acudiente?.getDireccion()} ?: '-'"></td>
+                <td th:text="${acudiente?.getOcupacion()} ?: '-'"></td>
+                <td th:text="${acudiente?.getCorreo()} ?: '-'"></td>
             </tr>
             </tbody>
         </table>
@@ -386,23 +386,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Transición</td>
-                <td>2008</td>
-                <td>Bogotá</td>
-                <td>Colegio nueva constitución</td>
-            </tr>
-            <tr>
-                <td>Primero</td>
-                <td>2009</td>
-                <td>Bogotá</td>
-                <td>Colegio guatemala</td>
-            </tr>
-            <tr>
-                <td>Segundo</td>
-                <td>2010</td>
-                <td>Bogotá</td>
-                <td>Colegio bolivia</td>
+            <tr th:each="curso: ${informacionEducativa}">
+                <td th:text="${curso.getGrado().getNombre()}"></td>
+                <td th:text="${curso.getFecha()}"></td>
+                <td th:text="${curso.getCiudad()}"></td>
+                <td th:text="${curso.getInstitucion()}"></td>
             </tr>
             </tbody>
         </table>
@@ -433,8 +421,8 @@
 
     <!--date container-->
     <section class="date-content content">
-        <p>Fecha: 17/09/2018</p>
-        <p>Hora: 20:54:13</p>
+        <p th:text="'Fecha: ' + ${fecha}"></p>
+        <p th:text="'Hora: ' + ${hora}"></p>
     </section>
     <!--date container-->
 
@@ -457,12 +445,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>MONTEALEGRE MONTEALEGRE CRISTOPHER ALEJANDRO</td>
-                <td>123456777890</td>
-                <td>2019</td>
-                <td>Transición</td>
-                <td>17/09/2018</td>
-                <td>20:54:13</td>
+                <td th:text="${estudiante.getNombrecompleto()} ?: '-'"></td>
+                <td th:text="${estudiante.getDocumento()} ?: '-'"></td>
+                <td th:text="${year} ?: '-'"></td>
+                <td th:text="${grado.getNombre()} ?: '-'"></td>
+                <td th:text="${fecha} ?: '-'"></td>
+                <td th:text="${hora} ?: '-'"></td>
             </tr>
             </tbody>
         </table>

@@ -12,10 +12,6 @@ spring:
           dialect: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: on
 
-  security:
-    user:
-      name: correo
-      password: password
 
   mail:
     properties:

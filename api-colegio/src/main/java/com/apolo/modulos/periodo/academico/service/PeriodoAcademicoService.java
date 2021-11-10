@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,7 +27,7 @@ public class PeriodoAcademicoService implements IPeriodoAcademicoService{
     }
 
     @Override
-    public void verificarPeriodosSobrelapados(PeriodoAcademico periodoAcademico) {
+    public List<PeriodoAcademico> obtenerPeriodosSobrelapados(PeriodoAcademico periodoAcademico) {
 
         GenericSpecification<PeriodoAcademico> genericSpecification = new GenericSpecification<>();
 
@@ -41,10 +42,26 @@ public class PeriodoAcademicoService implements IPeriodoAcademicoService{
                 SearchOperation.GREATER_THAN, periodoAcademico.getFechaInicio()));
 
 
-        List<PeriodoAcademico> periodosSobrelapados = periodoAcademicoRepository.findAll(genericSpecification);
-
-        if(!periodosSobrelapados.isEmpty())
-            throw new ErrorGeneralExcepcion(String.format("No se puede crear un periodo académico en los rangos de fecha %s - %s, porque se sobrelapa con periodos ya existentes",
-                    periodoAcademico.getFechaInicio(), periodoAcademico.getFechaFin()));
+        return periodoAcademicoRepository.findAll(genericSpecification);
     }
+
+    @Override
+    public Optional<PeriodoAcademico> obtenerPeriodoAnterior(PeriodoAcademico periodoAcademico) {
+
+        GenericSpecification<PeriodoAcademico> genericSpecification = new GenericSpecification<>();
+
+
+        genericSpecification.add(new SearchCriteria(PeriodoAcademico_.FECHA_FIN, periodoAcademico.getFechaInicio(),
+                SearchOperation.LESS_THAN, periodoAcademico.getFechaInicio()));
+
+        genericSpecification.add(new SearchCriteria(PeriodoAcademico_.FECHA_INICIO, periodoAcademico.getFechaInicioInscripcion1(),
+                SearchOperation.LESS_THAN, periodoAcademico.getFechaInicioInscripcion1()));
+
+        genericSpecification.add(new SearchCriteria(PeriodoAcademico_.FECHA_FIN, periodoAcademico.getFechaFinInscripcion1(),
+                SearchOperation.GREATER_THAN, periodoAcademico.getFechaFinInscripcion1()));
+
+        return periodoAcademicoRepository.findOne(genericSpecification);
+    }
+
+
 }

@@ -3,19 +3,21 @@ package com.apolo.modulos.periodo.academico.resource;
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
 import com.apolo.modulos.periodo.academico.repository.PeriodoAcademicoRepository;
 import com.apolo.modulos.periodo.academico.service.PeriodoAcademicoService;
+import com.apolo.spring.exception.ErrorGeneralExcepcion;
 import com.apolo.spring.exception.ObjetoNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class PeriodoAcademicoJPAResource {
 
     private final PeriodoAcademicoRepository periodoAcademicoRepository;
@@ -31,6 +33,7 @@ public class PeriodoAcademicoJPAResource {
     //todos los periodos
     // GET  /periodo/
     @GetMapping("/periodos")
+    @RolesAllowed({"COLABORADOR"})
     public List<PeriodoAcademico> getAll() {
         return periodoAcademicoRepository.findAll();
     }
@@ -39,6 +42,7 @@ public class PeriodoAcademicoJPAResource {
     //Trae un periodo por id
     // GET  /periodos/id
     @GetMapping("/periodos/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<PeriodoAcademico> getById(@PathVariable Long id) {
 
         Optional<PeriodoAcademico> periodo = periodoAcademicoRepository.findById(id);
@@ -56,15 +60,18 @@ public class PeriodoAcademicoJPAResource {
 
         return resource;
     }
+
     //eliminar periodo
     //periodo/id
     @DeleteMapping("/periodos/{id}")
+    @RolesAllowed({"COLABORADOR"})
     public void deleteById(@PathVariable Long id) {
         periodoAcademicoRepository.deleteById(id);
     }
 
     //crear periodo
     @PostMapping("/periodos")
+    @RolesAllowed({"COLABORADOR"})
     public EntityModel<PeriodoAcademico> creaOEditarPeriodo(@Valid @RequestBody PeriodoAcademico periodoAcademico) {
         Long idPeriodo = periodoAcademico.getId();
 
@@ -72,15 +79,20 @@ public class PeriodoAcademicoJPAResource {
             Optional<PeriodoAcademico> periodoExistente = periodoAcademicoRepository.findById(idPeriodo);
             if (!periodoExistente.isPresent())
                 throw new ObjetoNoEncontradoException("No se encontro el periodo con el id: " + idPeriodo);
-        }else{
+        } else {
             periodoAcademico.setFechaCreacionPeriodo(new Date());
         }
 
-        periodoAcademicoService.verificarPeriodosSobrelapados(periodoAcademico);
+        List<PeriodoAcademico> periodosSobrelapados = periodoAcademicoService.obtenerPeriodosSobrelapados(periodoAcademico);
+
+        if (!periodosSobrelapados.isEmpty())
+            throw new ErrorGeneralExcepcion(String.format("No se puede crear un periodo académico en los rangos de fecha %s - %s, porque se sobrelapa con periodos ya existentes",
+                    periodoAcademico.getFechaInicio(), periodoAcademico.getFechaFin()));
+
         PeriodoAcademico nuevoPeriodoAcademico = periodoAcademicoRepository.save(periodoAcademico);
 
         return EntityModel.of(nuevoPeriodoAcademico);
 
-}
+    }
 
 }

@@ -4,9 +4,7 @@ package com.apolo.modulos.estudiante.model;
 
 import com.apolo.modulos.grados.model.Grado;
 import com.apolo.modulos.periodo.academico.model.PeriodoAcademico;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
@@ -17,7 +15,7 @@ public class Matricula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("matriculas")
@@ -37,11 +35,11 @@ public class Matricula {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,6 +81,22 @@ public class Matricula {
 
     public void setPeriodoAcademico(PeriodoAcademico periodoAcademico) {
         this.periodoAcademico = periodoAcademico;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(Boolean jornada) {
+        this.jornada = jornada;
     }
 
     @Override

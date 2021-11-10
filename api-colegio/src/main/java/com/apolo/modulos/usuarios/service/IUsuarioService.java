@@ -16,6 +16,8 @@ public interface IUsuarioService {
 
     void crearTokenActivacion (Usuario usuario, String token);
 
+    TokenActivacionUsuario generarNuevoTokenActivacion (String token);
+
     Usuario getUsuario(String token);
 
     RolUsuario agregarRolUsuario(RolUsuario rolUsuario, Long id);

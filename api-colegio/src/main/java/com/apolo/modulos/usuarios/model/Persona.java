@@ -26,6 +26,12 @@ public class Persona {
     public Persona() {
 
     }
+    
+
+    public String getNombrecompleto() {
+
+        return String.format("%s %s %s %s", primerNombre, segundoNombre, primerApellido, segundoApellido);
+    }
 
     public String getPrimerNombre() {
         return primerNombre;

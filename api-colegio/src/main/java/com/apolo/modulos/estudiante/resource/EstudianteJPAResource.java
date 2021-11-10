@@ -10,6 +10,7 @@ import com.apolo.modulos.estudiante.service.IMatriculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ public class EstudianteJPAResource {
     //estudiantes por filtro
     // POST  /estudiantes/
     @PostMapping("/estudiantes/filtro")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public List<Estudiante> getByFilter(@RequestBody FiltroEstudianteRequest filtroEstudianteRequest) {
         return iEstudianteService.obtenerEstudiantesPorFiltro(filtroEstudianteRequest);
     }
@@ -40,6 +42,7 @@ public class EstudianteJPAResource {
     //Trae un estudiante por id
     // GET  /estudiantes/id
     @GetMapping("/estudiantes/{id}")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public EntityModel<Estudiante> getById(@PathVariable Long id) {
 
         Optional<Estudiante> estudiante = iEstudianteService.findById(id);
@@ -49,6 +52,7 @@ public class EstudianteJPAResource {
 
     //Eliminar estudiante por id
     @DeleteMapping("/estudiantes/{id}")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public ResponseEntity<?> deleteEstudiante(@PathVariable Long id) {
 
         EntityModel<?> resource = EntityModel.of(new DeleteResponse(id));
@@ -61,6 +65,7 @@ public class EstudianteJPAResource {
 
     //Matricular a un estudiante
     @PostMapping("/estudiantes/{id}/matriculas")
+    @PreAuthorize("hasRole('COORDINADOR')")
     public ResponseEntity<Matricula> createMatriculaEstudiante(@Valid  @RequestBody MatriculaEstudianteRequest matriculaEstudianteRequest, @PathVariable Long id){
 
         Matricula matricula = iMatriculaService.crearMatriculaEstudiante(matriculaEstudianteRequest);
